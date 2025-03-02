@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ziggurat'25 Registration</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700;900&display=swap');
+
+    :root {
+      --primary: #6C63FF;
+      --primary-darker: #5149ff;
+      --secondary: #FF6B6B;
+      --secondary-darker: #ff4848;
+      --accent: #00F5A0;
+      --accent-darker: #00d989;
+      --dark: #0F0F1A;
+      --dark-alt: #1A1A2E;
+      --light: #FFFFFF;
+      --gray-100: rgba(255, 255, 255, 0.1);
+      --gray-200: rgba(255, 255, 255, 0.2);
+      --gray-600: rgba(255, 255, 255, 0.6);
+      --gray-800: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', 'Inter', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      min-height: 100vh;
+      padding: 40px;
+      background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-bottom: 30px;
+    }
+    .header .logo img {
+      width: 150px;
+      height: auto;
+    }
+
+    /* Navigation */
+    .nav-bar {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-bar a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .nav-bar a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.4s ease;
+      border-radius: 30px;
+      z-index: -1;
+    }
+    .nav-bar a:hover {
+      color: var(--dark);
+    }
+    .nav-bar a:hover::before {
+      width: 100%;
+    }
+
+    /* Background Elements */
+    .triangle {
+      position: absolute;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      opacity: 0.3;
+      z-index: 0;
+      animation: float-triangle 25s infinite alternate;
+    }
+    .triangle.triangle-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: 15%;
+      left: -150px;
+      animation-duration: 30s;
+    }
+    .triangle.triangle-2 {
+      width: 250px;
+      height: 250px;
+      background: var(--secondary);
+      bottom: 10%;
+      right: -120px;
+      animation-duration: 35s;
+    }
+    .triangle.triangle-3 {
+      width: 200px;
+      height: 200px;
+      background: var(--accent);
+      top: 50%;
+      right: -100px;
+      animation-duration: 28s;
+    }
+    @keyframes float-triangle {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(20px, -20px) rotate(15deg); }
+      100% { transform: translate(-20px, 20px) rotate(-15deg); }
+    }
+    .noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* Registration Form Styles */
+    .registration {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 1px solid var(--gray-100);
+    }
+    .registration h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: var(--light);
+    }
+    .registration form {
+      display: grid;
+      gap: 15px;
+    }
+    .registration label {
+      font-size: 1rem;
+      margin-bottom: 5px;
+      color: var(--light);
+      display: block;
+    }
+    .registration input,
+    .registration select,
+    .registration textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid var(--gray-100);
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--light);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .registration input:focus,
+    .registration select:focus,
+    .registration textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 5px var(--accent);
+      outline: none;
+    }
+    /* Fully Customized Select Component */
+    .custom-select {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .custom-select select {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border-radius: 5px;
+      border: 1px solid var(--gray-100);
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--light);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    .custom-select::after {
+      content: "▼";
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--light);
+      font-size: 1rem;
+    }
+    .registration select option {
+      background: var(--dark);
+      color: var(--light);
+    }
+    .registration fieldset {
+      border: 1px solid var(--gray-100);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .registration fieldset legend {
+      padding: 0 5px;
+      font-size: 1rem;
+      color: var(--light);
+    }
+    .registration fieldset div {
+      margin-bottom: 10px;
+    }
+    /* Event Options as Toggle Buttons */
+    .event-option {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    .event-option input[type="checkbox"] {
+      display: none;
+    }
+    .event-option label {
+      display: inline-block;
+      padding: 10px 15px;
+      padding-right: 30px; /* extra space for checkmark */
+      border: 1px solid var(--gray-100);
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      user-select: none;
+      position: relative;
+      min-width: 180px;
+      text-align: center;
+    }
+    .event-option label::after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .event-option input[type="checkbox"]:checked + label {
+      background: var(--accent);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+    .event-option input[type="checkbox"]:checked + label::after {
+      content: "✓";
+      opacity: 1;
+      font-weight: bold;
+    }
+    .registration button {
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-darker));
+      color: var(--dark);
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .registration button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 245, 160, 0.3);
+    }
+    /* Error Message Styling */
+    .error-message {
+      color: var(--secondary);
+      font-size: 0.9rem;
+      margin-top: 5px;
+      display: block;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+      .header, .nav-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .nav-bar a {
+        padding: 10px 15px;
+      }
+      .registration {
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Background Elements -->
+    <div class="triangle triangle-1"></div>
+    <div class="triangle triangle-2"></div>
+    <div class="triangle triangle-3"></div>
+    <div class="noise"></div>
+    <div class="particles-container"></div>
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="https://www.rechargefest.in/Landing/college.webp" alt="College Logo">
+      </div>
+      <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="registration.html">Registration</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+    
+    <!-- Registration Form Section -->
+    <section class="registration">
+      <h2>Registration</h2>
+      <form action="#" method="post" novalidate>
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        </div>
+        <div>
+          <label for="collegeName">College Name</label>
+          <input type="text" id="collegeName" name="collegeName" placeholder="Enter your college name" required>
+        </div>
+        <div>
+          <label for="rollno">Roll No</label>
+          <input type="text" id="rollno" name="rollno" placeholder="Enter your roll number" required>
+        </div>
+        <div>
+          <label for="collegeEmail">College Email ID</label>
+          <input type="email" id="collegeEmail" name="collegeEmail" placeholder="Enter your college email" required>
+        </div>
+        <div>
+          <label for="personalEmail">Personal Email ID</label>
+          <input type="email" id="personalEmail" name="personalEmail" placeholder="Enter your personal email" required>
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+        </div>
+        <div>
+          <label for="department">Department</label>
+          <input type="text" id="department" name="department" placeholder="Enter your department" required>
+        </div>
+        <div class="custom-select">
+          <label for="yearOfStudy">Year of Study</label>
+          <select id="yearOfStudy" name="yearOfStudy" required>
+            <option value="">Select your year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+        <fieldset>
+          <legend>Events Participating In</legend>
+          <div class="event-option">
+            <input type="checkbox" id="event1" name="events" value="Civil Hackathon / Civilathon">
+            <label for="event1">Civil Hackathon / Civilathon</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event2" name="events" value="Paper and Poster Presentation">
+            <label for="event2">Paper and Poster Presentation</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event3" name="events" value="Auto CAD - Master CAD">
+            <label for="event3">Auto CAD - Master CAD</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event4" name="events" value="Technical Quiz - CiviQuiz">
+            <label for="event4">Technical Quiz - CiviQuiz</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event5" name="events" value="Code Book Test - Code Crack">
+            <label for="event5">Code Book Test - Code Crack</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event6" name="events" value="Treasure Hunt - Load and Locate">
+            <label for="event6">Treasure Hunt - Load and Locate</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event7" name="events" value="Master Builder">
+            <label for="event7">Master Builder</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event8" name="events" value="Arm Wrestling - Concrete Hands">
+            <label for="event8">Arm Wrestling - Concrete Hands</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event9" name="events" value="Scan and Plan">
+            <label for="event9">Scan and Plan</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event10" name="events" value="Connections - Link N Build">
+            <label for="event10">Connections - Link N Build</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event11" name="events" value="Kollywood Quiz - Bridge to Blockbuster">
+            <label for="event11">Kollywood Quiz - Bridge to Blockbuster</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event12" name="events" value="Block and Tackle - Reflex Debate">
+            <label for="event12">Block and Tackle - Reflex Debate</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event13" name="events" value="Cube Testing - Cube Clash">
+            <label for="event13">Cube Testing - Cube Clash</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event14" name="events" value="Model Exhibition - Structocon">
+            <label for="event14">Model Exhibition - Structocon</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event15" name="events" value="Photography - Name will be updated">
+            <label for="event15">Photography - Name will be updated</label>
+          </div>
+        </fieldset>
+        <button type="submit">Register Now</button>
+      </form>
+    </section>
+  </div>
+  
+  <!-- JavaScript for Particle Generation, Inline Validation, and Google Sheets Integration -->
+  <script>
+    // Particle Generation
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.querySelector('.particles-container');
+      if (particlesContainer) {
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.style.position = 'absolute';
+          particle.style.borderRadius = '50%';
+          particle.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+          particle.style.width = '2px';
+          particle.style.height = '2px';
+          particle.style.opacity = 0.6;
+          particle.style.animation = 'particle-rise 15s infinite linear';
+          const randomLeft = Math.random() * 100;
+          const randomOffset = Math.random();
+          particle.style.left = `${randomLeft}%`;
+          particle.style.setProperty('--random-offset', randomOffset);
+          particle.style.animationDelay = `${Math.random() * 15}s`;
+          particlesContainer.appendChild(particle);
+        }
+      }
+    });
+
+    // Inline Validation for Required Fields, Email, and Phone Number
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('form');
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default submission
+        let valid = true;
+        const inputs = form.querySelectorAll('input[required], select[required]');
+        inputs.forEach(input => {
+          if (!input.value.trim()) {
+            valid = false;
+            showError(input, 'This field is required');
+          } else if (input.type === 'email' && !validateEmail(input.value)) {
+            valid = false;
+            showError(input, 'Please enter a valid email address');
+          } else if (input.type === 'tel' && !validatePhone(input.value)) {
+            valid = false;
+            showError(input, 'Please enter a valid phone number');
+          } else {
+            clearError(input);
+          }
+        });
+        if (valid) {
+          // Send data to Google Sheets
+          sendDataToSheets(new FormData(form));
+        }
+      });
+      
+      form.querySelectorAll('input[required], select[required]').forEach(input => {
+        input.addEventListener('blur', function() {
+          if (!input.value.trim()) {
+            showError(input, 'This field is required');
+          } else if (input.type === 'email' && !validateEmail(input.value)) {
+            showError(input, 'Please enter a valid email address');
+          } else if (input.type === 'tel' && !validatePhone(input.value)) {
+            showError(input, 'Please enter a valid phone number');
+          } else {
+            clearError(input);
+          }
+        });
+      });
+      
+      function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+      
+      function validatePhone(phone) {
+        var cleaned = phone.replace(/[\s\-()]/g, '');
+        return /^[0-9]{10,15}$/.test(cleaned);
+      }
+      
+      function showError(input, message) {
+        let errorSpan = input.parentNode.querySelector('.error-message');
+        if (!errorSpan) {
+          errorSpan = document.createElement('span');
+          errorSpan.className = 'error-message';
+          input.parentNode.appendChild(errorSpan);
+        }
+        errorSpan.textContent = message;
+      }
+      
+      function clearError(input) {
+        let errorSpan = input.parentNode.querySelector('.error-message');
+        if (errorSpan) {
+          errorSpan.textContent = '';
+        }
+      }
+      
+      // Integration with Google Sheets via Google Apps Script
+      function sendDataToSheets(formData) {
+        const data = {};
+        formData.forEach((value, key) => {
+          if (data[key]) {
+            if (!Array.isArray(data[key])) {
+              data[key] = [data[key]];
+            }
+            data[key].push(value);
+          } else {
+            data[key] = value;
+          }
+        });
+        // Replace YOUR_GOOGLE_SCRIPT_URL with your actual deployed URL from Google Apps Script
+        fetch("https://script.google.com/macros/s/AKfycbx9JOaNWgZQc9-wQ34NrCvl8XXx6BewrAu7Dl6exyWERK3HoscynLCxxA6StGuszXLC/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
+          alert("Registration successful!");
+          form.reset();
+        })
+        .catch(error => {
+          alert("There was an error submitting the form. Please try again.");
+          console.error("Error:", error);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
