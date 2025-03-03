@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schedule - Ziggurat'25</title>
+  <style>
+    /* Our Original Theme */
+    :root {
+      --primary: #6C63FF;
+      --primary-hover: #5149ff;
+      --secondary: #FF6B6B;
+      --secondary-hover: #ff4848;
+      --accent: #00F5A0;
+      --accent-darker: #00d989;
+      --dark: #0F0F1A;
+      --dark-alt: #1A1A2E;
+      --light: #FFFFFF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+    }
+    
+    /* Poster Background & Decorations */
+    .poster {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px;
+      background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
+      overflow: hidden;
+    }
+    
+    /* Animated Triangles (for consistency with our other pages) */
+    .triangle {
+      position: absolute;
+      opacity: 0.3;
+      z-index: 0;
+      animation: float 25s infinite alternate;
+    }
+    .triangle.t1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: 15%;
+      left: -150px;
+      animation-duration: 30s;
+    }
+    .triangle.t2 {
+      width: 250px;
+      height: 250px;
+      background: var(--secondary);
+      bottom: 10%;
+      right: -120px;
+      animation-duration: 35s;
+    }
+    @keyframes float {
+      0% { transform: translate(0,0) rotate(0deg); }
+      50% { transform: translate(20px,-20px) rotate(15deg); }
+      100% { transform: translate(-20px,20px) rotate(-15deg); }
+    }
+    
+    /* Noise Overlay */
+    .noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    /* Particles */
+    .particles-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: var(--accent);
+      width: 2px;
+      height: 2px;
+      animation: particle-rise 15s linear infinite;
+      opacity: 0.6;
+    }
+    @keyframes particle-rise {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-50px); opacity: 0; }
+    }
+    
+    /* Main Content Container */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    /* Header & Navigation */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+    .logo img {
+      width: 150px;
+      height: auto;
+    }
+    .nav-bar {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-bar a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .nav-bar a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 30px;
+      transition: width 0.4s ease;
+      z-index: -1;
+    }
+    .nav-bar a:hover {
+      color: var(--dark);
+    }
+    .nav-bar a:hover::before {
+      width: 100%;
+    }
+    
+    /* Schedule Header */
+    .schedule-header {
+      font-size: 3rem;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .schedule-subtext {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    /* Timeline Container */
+    .timeline-container {
+      position: relative;
+      margin: 60px auto;
+      max-width: 800px;
+      padding-left: 80px;
+    }
+    /* Vertical Progress Line (Straight) */
+    .progress-line {
+      position: absolute;
+      left: 40px;
+      top: 0;
+      width: 4px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease-out;
+    }
+    /* Timeline Items */
+    .timeline-item {
+      position: relative;
+      margin-bottom: 60px;
+      padding: 20px 30px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      text-align: left;
+      opacity: 0;
+      transform: translateX(-50px);
+      filter: brightness(0.7);
+      transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+    }
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+      filter: brightness(1);
+    }
+    /* Horizontal Connector Line */
+    .timeline-item::after {
+      content: "";
+      position: absolute;
+      left: -40px;
+      top: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: width 0.6s ease, opacity 0.6s ease;
+    }
+    .timeline-item.visible::after {
+      width: 40px;
+      opacity: 1;
+    }
+    .time {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    .event-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .event-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+    }
+    
+    @media (max-width: 768px) {
+      .timeline-container {
+        padding-left: 40px;
+      }
+      .progress-line {
+        left: 20px;
+      }
+      .timeline-item::after {
+        left: -30px;
+      }
+      .timeline-item {
+        text-align: center;
+      }
+    }
+    
+    /* Optional Interactive Hover Effect */
+    .timeline-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 8px 16px rgba(0, 245, 160, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+    <!-- Background Decorations -->
+    <div class="triangle t1"></div>
+    <div class="triangle t2"></div>
+    <div class="noise"></div>
+    <div class="particles-container"></div>
+    
+    <!-- Main Content -->
+    <div class="container">
+      <header class="header">
+        <div class="logo">
+          <img src="asset/college.webp" alt="College Logo" />
+        </div>
+        <nav class="nav-bar">
+          <a href="index.html">Home</a>
+          <a href="registration.html">Registration</a>
+          <a href="schedule.html">Schedule</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </header>
+      
+      <h1 class="schedule-header">Event Schedule</h1>
+      <p class="schedule-subtext">Scroll down to watch our timeline come to life</p>
+      
+      <div class="timeline-container" id="timelineContainer">
+        <div class="progress-line" id="progressLine"></div>
+        
+        <div class="timeline-item">
+          <div class="time">9:00 AM</div>
+          <div class="event-title">Opening Ceremony</div>
+          <div class="event-desc">Welcome address and opening remarks by the organizers.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">10:00 AM</div>
+          <div class="event-title">Keynote Presentation</div>
+          <div class="event-desc">Inspiring keynote speech by an industry leader in civil engineering.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">11:30 AM</div>
+          <div class="event-title">Technical Session 1</div>
+          <div class="event-desc">Interactive sessions on the latest innovations and sustainable practices.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">1:00 PM</div>
+          <div class="event-title">Lunch Break</div>
+          <div class="event-desc">Time for refreshments and networking.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2:00 PM</div>
+          <div class="event-title">Panel Discussion</div>
+          <div class="event-desc">Experts discuss emerging trends and future challenges in civil engineering.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">4:00 PM</div>
+          <div class="event-title">Closing Ceremony</div>
+          <div class="event-desc">Summary of the day’s events and closing remarks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Intersection Observer for Reveal Effect -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.5 });
+      timelineItems.forEach(item => observer.observe(item));
+    });
+  </script>
+  
+  <!-- Scroll-Triggered Progress Line Update -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const timelineContainer = document.getElementById('timelineContainer');
+      const progressLine = document.getElementById('progressLine');
+      
+      function updateProgress() {
+        const rect = timelineContainer.getBoundingClientRect();
+        const containerHeight = timelineContainer.offsetHeight;
+        const windowHeight = window.innerHeight;
+        let visible = windowHeight - rect.top;
+        visible = Math.max(0, Math.min(visible, containerHeight));
+        progressLine.style.height = visible + 'px';
+      }
+      
+      updateProgress();
+      window.addEventListener('scroll', updateProgress);
+      window.addEventListener('resize', updateProgress);
+    });
+  </script>
+  
+  <!-- Particle Generation Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const particlesContainer = document.querySelector('.particles-container');
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particlesContainer.appendChild(particle);
+      }
+    });
+  </script>
+</body>
+</html>

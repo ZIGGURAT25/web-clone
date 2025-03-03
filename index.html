@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ziggurat'25 Technical Symposium - Base Version</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ziggurat'25 Technical Symposium - Frosted Particle Overlay Cards</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700;900&display=swap');
 
@@ -12,10 +12,8 @@
       size: A4 portrait;
       margin: 10mm;
     }
-
-    /* Print media adjustments */
     @media print {
-      .triangle, .noise, .particle, .modal, .shape {
+      .triangle, .noise, .particle, .modal, .shape, .card-overlay, .particle-layer {
         display: none !important;
       }
       body {
@@ -29,7 +27,6 @@
         overflow: visible;
       }
     }
-
     :root {
       --primary: #6C63FF;
       --primary-darker: #5149ff;
@@ -40,38 +37,42 @@
       --dark: #0F0F1A;
       --dark-alt: #1A1A2E;
       --light: #FFFFFF;
+      --glow-color: rgba(108, 99, 255, 0.6);
+      /* Updated overlay: 98% opaque white for a frosted effect */
+      --overlay-color: rgba(255, 255, 255, 0.98);
       --gray-100: rgba(255, 255, 255, 0.1);
       --gray-200: rgba(255, 255, 255, 0.2);
       --gray-600: rgba(255, 255, 255, 0.6);
       --gray-800: rgba(255, 255, 255, 0.8);
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Poppins', 'Inter', sans-serif;
       background-color: var(--dark);
       color: var(--light);
       line-height: 1.6;
     }
-
     .poster {
-      max-width: 1000px;
-      margin: 20px auto;
+      width: 100%;
       min-height: 100vh;
+      padding: 40px;
       position: relative;
       overflow: hidden;
-      padding: 40px;
       background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
-      border-radius: 15px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     }
-
-    /* Animated Triangles Background */
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* ---------------------------
+       Background Animations & Shapes
+       --------------------------- */
     .triangle {
       position: absolute;
       clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
@@ -108,16 +109,12 @@
       50% { transform: translate(20px, -20px) rotate(15deg); }
       100% { transform: translate(-20px, 20px) rotate(-15deg); }
     }
-
-    /* Additional Background Shapes */
     .shape {
       position: absolute;
       z-index: 0;
       opacity: 0.4;
     }
-    .shape.circle {
-      border-radius: 50%;
-    }
+    .shape.circle { border-radius: 50%; }
     @keyframes float-circle {
       0% { transform: translate(0, 0) scale(1); }
       50% { transform: translate(20px, 20px) scale(1.1); }
@@ -158,7 +155,6 @@
       transform: rotate(45deg);
       animation: float-diamond 22s infinite alternate;
     }
-    /* New additional shapes on the left side */
     @keyframes float-circle2 {
       0% { transform: translate(0, 0) scale(1); }
       50% { transform: translate(15px, -15px) scale(1.05); }
@@ -186,8 +182,7 @@
       transform: rotate(45deg);
       animation: float-diamond2 20s infinite alternate;
     }
-
-    /* Particle Animation */
+    /* Global Particle Animation */
     .particle {
       position: absolute;
       border-radius: 50%;
@@ -198,19 +193,11 @@
       opacity: 0.6;
     }
     @keyframes particle-rise {
-      0% {
-        transform: translateY(100vh) translateX(0);
-        opacity: 0;
-      }
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
       10% { opacity: 0.6; }
       90% { opacity: 0.6; }
-      100% {
-        transform: translateY(-50px) translateX(calc(sin(var(--random-offset)) * 100px));
-        opacity: 0;
-      }
+      100% { transform: translateY(-50px) translateX(calc(sin(var(--random-offset)) * 100px)); opacity: 0; }
     }
-
-    /* Subtle Noise Overlay */
     .noise {
       position: absolute;
       top: 0;
@@ -222,14 +209,9 @@
       z-index: 1;
       pointer-events: none;
     }
-
-    /* Content Container */
-    .content {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Header with Small Logo at Top Left & Nav at Top Right */
+    /* ---------------------------
+       Header & Navigation
+       --------------------------- */
     .header {
       display: flex;
       align-items: center;
@@ -241,8 +223,6 @@
       width: 150px;
       height: auto;
     }
-
-    /* Navigation Bar */
     .nav-bar {
       display: flex;
       gap: 20px;
@@ -276,8 +256,9 @@
     .nav-bar a:hover::before {
       width: 100%;
     }
-
-    /* Divider, Department & Event Showcase */
+    /* ---------------------------
+       Department & Event Showcase
+       --------------------------- */
     .divider {
       width: 100%;
       height: 1px;
@@ -316,18 +297,44 @@
       padding: 60px 0;
       margin-bottom: 70px;
     }
+    .event-title-container {
+      position: relative;
+      display: inline-block;
+    }
     .event-title {
       font-size: 7rem;
       font-weight: 900;
       letter-spacing: -3px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background: linear-gradient(270deg, #ff0080, #ff8c00, #40e0d0, #ff0080);
+      background-size: 400% 400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: gradientAnimation 8s ease infinite;
       margin-bottom: 15px;
       line-height: 1;
       position: relative;
       z-index: 3;
       text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .date-tag {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      padding: 12px 25px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 1rem;
+      z-index: 1;
+      box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .event-subtitle {
       font-size: 1.4rem;
@@ -338,26 +345,9 @@
       z-index: 3;
       text-transform: uppercase;
     }
-    .date-tag {
-      position: absolute;
-      top: 10px;
-      right: 0;
-      background: linear-gradient(135deg, var(--secondary), var(--primary));
-      color: white;
-      padding: 12px 25px;
-      border-radius: 100px;
-      font-weight: 600;
-      font-size: 1rem;
-      z-index: 3;
-      box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .date-tag:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(108, 99, 255, 0.4);
-    }
-
-    /* Specialized Sponsored By Section */
+    /* ---------------------------
+       Sponsor Section (Segmented Box)
+       --------------------------- */
     .sponsors {
       background: linear-gradient(135deg, #2a2a40, #1a1a2e);
       padding: 40px 20px;
@@ -394,16 +384,17 @@
         width: 100px;
       }
     }
-
-    /* Events Section */
+    /* ---------------------------
+       Events Section with Enhanced Depth & Frosted Particle Overlay
+       --------------------------- */
     .events-section {
       margin: 50px 0;
+      text-align: center;
       position: relative;
       z-index: 3;
     }
     .events-section h2 {
       font-size: 2.2rem;
-      text-align: center;
       margin-bottom: 30px;
       color: var(--light);
       position: relative;
@@ -422,125 +413,123 @@
       bottom: -10px;
     }
     .events-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
     }
     .event {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      margin: 15px;
-      padding: 25px 30px;
-      border-radius: 15px;
-      cursor: pointer;
-      overflow: hidden;
       position: relative;
-      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 280px;
+      height: 400px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--gray-100);
-      transform-origin: center;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), background 0.6s ease, box-shadow 0.6s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
+    /* Enhanced depth & glow effect on hover */
     .event:hover {
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      background: rgba(255, 255, 255, 0.07);
-      transform: translateY(-5px);
+      transform: perspective(1000px) translateZ(-30px) scale(0.98);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 20px 40px var(--glow-color);
     }
-    /* Event Thumbnail Styles */
-    .event-thumbnail {
+    .event-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transition: opacity 0.6s ease;
+    }
+    .event-content .event-thumbnail {
       width: 100%;
       max-width: 150px;
       height: 150px;
       object-fit: cover;
       border-radius: 10px;
       margin-bottom: 15px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+      transition: transform 0.6s ease;
     }
-    .event h3 {
-      font-size: 1.5rem;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: color 0.3s ease;
+    .event-content h3 {
+      font-size: 1.3rem;
+      text-align: center;
+      flex-grow: 1;
+      transition: transform 0.6s ease;
     }
-    .event h3::after {
-      content: '+';
-      font-size: 1.6rem;
-      transition: transform 0.5s ease;
-    }
-    .event:hover h3::after {
-      transform: rotate(90deg);
-    }
-
-    /* Modal Pop-Up for Event Info */
-    .modal {
-      position: fixed;
+    /* Frosted overlay with 98% translucent effect */
+    .card-overlay {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
+      background: var(--overlay-color);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 100;
-      padding: 20px;
+      z-index: 2;
     }
-    .modal.active {
-      display: flex;
-      animation: fadeIn 0.4s;
+    .event:hover .card-overlay {
+      opacity: 1;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .modal-content {
-      background: var(--light);
-      color: var(--dark);
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 500px;
+    /* Particle layer covering the overlay */
+    .particle-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      position: relative;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    .modal-content h3 {
-      margin-bottom: 15px;
-      font-size: 1.8rem;
-    }
-    .modal-content p {
-      margin-bottom: 10px;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    .modal-content a.register-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 25px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-darker));
-      color: var(--dark);
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0, 245, 160, 0.2);
-      position: relative;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
       overflow: hidden;
     }
-    .modal-content .close-modal {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: transparent;
+    /* Vertically stacked buttons above the particle layer */
+    .card-overlay button {
+      position: relative;
+      z-index: 2;
+      padding: 10px 20px;
       border: none;
-      font-size: 1.8rem;
+      border-radius: 30px;
+      font-weight: 600;
       cursor: pointer;
+      margin: 10px 0;
+      width: 70%;
+      transition: background 0.3s ease, transform 0.3s ease, opacity 0.6s ease;
+      opacity: 0;
+      animation: fadeInScale 0.6s forwards 0.3s;
+    }
+    @keyframes fadeInScale {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .card-overlay .info-btn {
+      background: var(--primary);
+      color: var(--light);
+    }
+    .card-overlay .info-btn:hover {
+      background: var(--primary-darker);
+    }
+    .card-overlay .register-btn {
+      background: var(--accent);
       color: var(--dark);
     }
-
-    /* Sections Container */
+    .card-overlay .register-btn:hover {
+      background: var(--accent-darker);
+      transform: scale(1.05);
+    }
+    /* ---------------------------
+       Additional Sections & Footer
+       --------------------------- */
     .sections-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -553,8 +542,8 @@
       padding: 25px;
       background: rgba(255, 255, 255, 0.03);
       border-radius: 15px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       border: 1px solid var(--gray-100);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .section:hover {
       transform: translateY(-5px);
@@ -581,11 +570,8 @@
       color: var(--gray-600);
       font-size: 0.95rem;
       line-height: 1.8;
-      position: relative;
       padding-left: 15px;
-    }
-    .section-content p {
-      margin-bottom: 15px;
+      position: relative;
     }
     .section-content::before {
       content: '';
@@ -596,8 +582,6 @@
       height: 100%;
       background: linear-gradient(to bottom, var(--primary), transparent);
     }
-
-    /* Footer */
     .footer {
       text-align: center;
       margin-top: 60px;
@@ -626,79 +610,39 @@
       background: var(--primary);
       transform: translateY(-5px);
     }
-
-    /* Mobile Responsive Adjustments */
     @media (max-width: 768px) {
-      .poster {
-        padding: 20px;
-        margin: 10px;
-      }
-      .header {
-        flex-wrap: wrap;
-      }
-      .nav-bar {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-      }
-      .nav-bar a {
-        padding: 10px 15px;
-      }
-      .sponsor-logos img {
-        width: 100px;
-      }
-      .event-showcase {
-        padding: 40px 0;
-      }
-      .event-title {
-        font-size: 4rem;
-      }
-      .event-subtitle {
-        font-size: 1.2rem;
-      }
-      .events-container {
-        grid-template-columns: 1fr;
-      }
-      .sections-container {
-        grid-template-columns: 1fr;
-      }
-      .date-tag {
-        font-size: 0.9rem;
-        padding: 10px 20px;
-      }
-      .modal-content {
-        padding: 20px;
-      }
+      .poster { padding: 20px; }
+      .header { flex-wrap: wrap; }
+      .nav-bar { flex-wrap: wrap; justify-content: center; gap: 10px; }
+      .nav-bar a { padding: 10px 15px; }
+      .sponsor-logos img { width: 100px; }
+      .event-showcase { padding: 40px 0; }
+      .event-title { font-size: 4rem; }
+      .event-subtitle { font-size: 1.2rem; }
+      .events-container { flex-direction: column; align-items: center; }
+      .sections-container { grid-template-columns: 1fr; }
+      .date-tag { font-size: 0.9rem; padding: 10px 20px; }
     }
   </style>
 </head>
 <body>
   <div class="poster">
-    <!-- Animated Triangles -->
+    <!-- Animated Background Shapes -->
     <div class="triangle triangle-1"></div>
     <div class="triangle triangle-2"></div>
     <div class="triangle triangle-3"></div>
-    
-    <!-- Additional Background Shapes -->
     <div class="shape circle shape-1"></div>
     <div class="shape square shape-2"></div>
     <div class="shape diamond shape-3"></div>
-    <!-- New shapes added on left side -->
     <div class="shape circle shape-4"></div>
     <div class="shape diamond shape-5"></div>
-    
-    <!-- Noise Overlay -->
     <div class="noise"></div>
-    
-    <!-- Particles Container -->
     <div class="particles-container"></div>
-    
     <!-- Main Content -->
     <div class="content">
-      <!-- Header with small logo at top left and nav at top right -->
       <header class="header">
         <div class="logo">
-          <img src="https://www.rechargefest.in/Landing/college.webp" alt="College Logo and Name">
+          <img src="asset/college.webp" alt="College Logo and Name" />
         </div>
         <nav class="nav-bar">
           <a href="index.html">Home</a>
@@ -707,115 +651,82 @@
           <a href="contact.html">Contact</a>
         </nav>
       </header>
-      
       <div class="divider"></div>
-      
-      <!-- Department Information -->
       <div class="department">
         <h3>DEPARTMENT OF CIVIL ENGINEERING</h3>
         <h3>PROUDLY PRESENTS</h3>
       </div>
-      
-      <!-- Event Showcase -->
       <div class="event-showcase">
-        <div class="date-tag">JOIN US ON MARCH 22</div>
-        <div class="event-title">ZIGGURAT'25</div>
+        <div class="event-title-container">
+          <div class="event-title">ZIGGURAT'25</div>
+          <div class="date-tag">JOIN US ON MARCH 22</div>
+        </div>
         <div class="event-subtitle">A NATIONAL LEVEL TECHNICAL SYMPOSIUM</div>
       </div>
-      
-      <!-- Specialized Sponsored By Section -->
+      <!-- Sponsor Section (Segmented Box) -->
       <div class="sponsors">
         <h2>Sponsored By</h2>
         <div class="sponsor-logos">
-          <img src="https://via.placeholder.com/150?text=Sponsor+1" alt="Sponsor 1">
-          <img src="https://via.placeholder.com/150?text=Sponsor+2" alt="Sponsor 2">
-          <img src="https://via.placeholder.com/150?text=Sponsor+3" alt="Sponsor 3">
-          <img src="https://via.placeholder.com/150?text=Sponsor+4" alt="Sponsor 4">
+          <img src="https://via.placeholder.com/150?text=Sponsor+1" alt="Sponsor 1" />
+          <img src="https://via.placeholder.com/150?text=Sponsor+2" alt="Sponsor 2" />
+          <img src="https://via.placeholder.com/150?text=Sponsor+3" alt="Sponsor 3" />
+          <img src="https://via.placeholder.com/150?text=Sponsor+4" alt="Sponsor 4" />
         </div>
       </div>
-      
-      <!-- Interactive Events Section -->
+      <!-- Events Section with Enhanced Depth & Frosted Particle Overlay -->
       <div class="events-section">
         <h2>Our Events</h2>
         <div class="events-container">
-          <!-- 1. Civil Hackathon / Civilathon -->
+          <!-- Example Event Card -->
           <div class="event" data-title="Civil Hackathon / Civilathon" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Dhanya.K</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Civil Hackathon / Civilathon</h3>
+            <div class="event-content">
+              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
+              <h3>Civil Hackathon / Civilathon</h3>
+            </div>
+            <!-- Frosted overlay with 98% opacity and particle layer -->
+            <div class="card-overlay">
+              <div class="particle-layer"></div>
+              <button class="info-btn">Info</button>
+              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
+            </div>
           </div>
-          <!-- 2. Paper and Poster Presentation -->
+          <!-- Additional Event Cards -->
           <div class="event" data-title="Paper and Poster Presentation" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Vignesh.M</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Paper and Poster Presentation</h3>
+            <div class="event-content">
+              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
+              <h3>Paper and Poster Presentation</h3>
+            </div>
+            <div class="card-overlay">
+              <div class="particle-layer"></div>
+              <button class="info-btn">Info</button>
+              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
+            </div>
           </div>
-          <!-- 3. Auto CAD - Master CAD -->
           <div class="event" data-title="Auto CAD - Master CAD" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Dharshan.P</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Auto CAD - Master CAD</h3>
+            <div class="event-content">
+              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
+              <h3>Auto CAD - Master CAD</h3>
+            </div>
+            <div class="card-overlay">
+              <div class="particle-layer"></div>
+              <button class="info-btn">Info</button>
+              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
+            </div>
           </div>
-          <!-- 4. Technical Quiz - CiviQuiz -->
           <div class="event" data-title="Technical Quiz - CiviQuiz" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Priyadharshini.K</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Technical Quiz - CiviQuiz</h3>
+            <div class="event-content">
+              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
+              <h3>Technical Quiz - CiviQuiz</h3>
+            </div>
+            <div class="card-overlay">
+              <div class="particle-layer"></div>
+              <button class="info-btn">Info</button>
+              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
+            </div>
           </div>
-          <!-- 5. Code Book Test - Code Crack -->
-          <div class="event" data-title="Code Book Test - Code Crack" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Hemalatha.S</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Code Book Test - Code Crack</h3>
-          </div>
-          <!-- 6. Treasure Hunt - Load and Locate -->
-          <div class="event" data-title="Treasure Hunt - Load and Locate" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Akshaya Priya. B</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Treasure Hunt - Load and Locate</h3>
-          </div>
-          <!-- 7. Master Builder -->
-          <div class="event" data-title="Master Builder" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Jaghatharani.S</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Master Builder</h3>
-          </div>
-          <!-- 8. Arm Wrestling - Concrete Hands -->
-          <div class="event" data-title="Arm Wrestling - Concrete Hands" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Dhakshinamoorthi.</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Arm Wrestling - Concrete Hands</h3>
-          </div>
-          <!-- 9. Scan and Plan -->
-          <div class="event" data-title="Scan and Plan" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Vennila K T</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Scan and Plan</h3>
-          </div>
-          <!-- 10. Connections - Link N Build -->
-          <div class="event" data-title="Connections - Link N Build" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Durgashree S</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Connections - Link N Build</h3>
-          </div>
-          <!-- 11. Kollywood Quiz - Bridge to Blockbuster -->
-          <div class="event" data-title="Kollywood Quiz - Bridge to Blockbuster" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Srikeerthanaa P J</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Kollywood Quiz - Bridge to Blockbuster</h3>
-          </div>
-          <!-- 12. Block and Tackle - Reflex Debate -->
-          <div class="event" data-title="Block and Tackle - Reflex Debate" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Srikeerthanaa P J</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Block and Tackle - Reflex Debate</h3>
-          </div>
-          <!-- 13. Cube Testing - Cube Clash -->
-          <div class="event" data-title="Cube Testing - Cube Clash" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Dharshan P</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Cube Testing - Cube Clash</h3>
-          </div>
-          <!-- 14. Model Exhibition - Structocon -->
-          <div class="event" data-title="Model Exhibition - Structocon" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Vignesh M</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Model Exhibition - Structocon</h3>
-          </div>
-          <!-- 15. Photography - Name will be updated -->
-          <div class="event" data-title="Photography - Name will be updated" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Kabilesh</p>">
-            <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail">
-            <h3>Photography - Name will be updated</h3>
-          </div>
+          <!-- More cards can be added in the same format -->
         </div>
       </div>
-      
       <!-- Additional Sections -->
       <div class="sections-container">
         <div class="section">
@@ -833,7 +744,6 @@
           </div>
         </div>
       </div>
-      
       <!-- Footer -->
       <div class="footer">
         <div class="social-links">
@@ -846,8 +756,7 @@
       </div>
     </div>
   </div>
-  
-  <!-- Modal Pop-Up for Event Info -->
+  <!-- Modal for Event Info -->
   <div class="modal" id="eventModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeModal()">×</button>
@@ -856,44 +765,72 @@
       <a class="register-btn" href="registration.html">Register Now</a>
     </div>
   </div>
-  
-  <!-- JavaScript for Modal and Particle Generation -->
+  <!-- JavaScript -->
   <script>
-    // Modal functionality
+    // Modal functionality for Info buttons
     const modal = document.getElementById('eventModal');
     const modalTitle = document.getElementById('modal-title');
     const modalInfo = document.getElementById('modal-info');
-    
-    document.querySelectorAll('.event').forEach(eventCard => {
-      eventCard.addEventListener('click', () => {
-        const title = eventCard.getAttribute('data-title');
-        const info = eventCard.getAttribute('data-info');
-        modalTitle.innerHTML = title;
-        modalInfo.innerHTML = info;
+
+    document.querySelectorAll('.info-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const eventCard = btn.closest('.event');
+        modalTitle.innerHTML = eventCard.getAttribute('data-title');
+        modalInfo.innerHTML = eventCard.getAttribute('data-info');
         modal.classList.add('active');
       });
     });
-    
+
     function closeModal() {
       modal.classList.remove('active');
     }
-    
-    // Generate particles
+
+    // Global Particles for background
     document.addEventListener('DOMContentLoaded', function() {
-      const particlesContainer = document.querySelector('.particles-container');
-      if (particlesContainer) {
+      const globalParticles = document.querySelector('.particles-container');
+      if (globalParticles) {
         for (let i = 0; i < 30; i++) {
-          const particle = document.createElement('div');
-          particle.classList.add('particle');
-          const randomLeft = Math.random() * 100;
-          const randomOffset = Math.random();
-          particle.style.left = `${randomLeft}%`;
-          particle.style.setProperty('--random-offset', randomOffset);
-          particle.style.animationDelay = `${Math.random() * 15}s`;
-          particlesContainer.appendChild(particle);
+          const p = document.createElement('div');
+          p.classList.add('particle');
+          p.style.left = `${Math.random() * 100}%`;
+          p.style.setProperty('--random-offset', Math.random());
+          p.style.animationDelay = `${Math.random() * 15}s`;
+          globalParticles.appendChild(p);
         }
       }
+      // Generate particles for each card overlay
+      const overlays = document.querySelectorAll('.card-overlay');
+      overlays.forEach(overlay => {
+        const layer = document.createElement('div');
+        layer.classList.add('particle-layer');
+        overlay.appendChild(layer);
+        for (let i = 0; i < 50; i++) {
+          const p = document.createElement('div');
+          p.classList.add('card-particle');
+          p.style.position = 'absolute';
+          p.style.left = `${Math.random() * 100}%`;
+          p.style.top = `${Math.random() * 100}%`;
+          const size = Math.random() * 3 + 1; // 1px to 4px
+          p.style.width = `${size}px`;
+          p.style.height = `${size}px`;
+          p.style.background = 'lime';
+          p.style.opacity = Math.random() * 0.6 + 0.2;
+          p.style.animation = `floatUp ${Math.random() * 3 + 2}s linear infinite`;
+          layer.appendChild(p);
+        }
+      });
     });
+
+    // Keyframes for particles in overlay
+    const styleEl = document.createElement('style');
+    styleEl.innerHTML = `
+      @keyframes floatUp {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-20px); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(styleEl);
   </script>
 </body>
 </html>
