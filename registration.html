@@ -63,7 +63,7 @@
       height: auto;
     }
 
-    /* Navigation with Gradient Hover (matching index) */
+    /* Navigation with Gradient Hover */
     .nav-bar {
       display: flex;
       gap: 20px;
@@ -88,10 +88,11 @@
       background: linear-gradient(90deg, var(--primary), var(--accent));
       transition: width 0.4s ease;
       border-radius: 30px;
+      pointer-events: none;
       z-index: -1;
     }
     .nav-bar a:hover {
-      color: var(--dark);
+      color: var(--light) !important;
     }
     .nav-bar a:hover::before {
       width: 100%;
@@ -348,7 +349,7 @@
     <!-- Registration Form Section -->
     <section class="registration">
       <h2>Registration</h2>
-      <form action="#" method="post" novalidate>
+      <form id="registrationForm" action="#" method="post" novalidate>
         <div>
           <label for="name">Name</label>
           <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -503,8 +504,24 @@
           }
         });
         if (valid) {
+          // Provide loading feedback
+          const submitButton = form.querySelector('button[type="submit"]');
+          submitButton.disabled = true;
+          submitButton.textContent = "Loading...";
+          
           // Send data to Google Sheets
-          sendDataToSheets(new FormData(form));
+          sendDataToSheets(new FormData(form))
+            .then(() => {
+              alert("Registration successful!");
+              submitButton.disabled = false;
+              submitButton.textContent = "Register Now";
+            })
+            .catch(error => {
+              alert("There was an error submitting the form. Please try again.");
+              console.error("Error:", error);
+              submitButton.disabled = false;
+              submitButton.textContent = "Register Now";
+            });
         }
       });
       
@@ -563,21 +580,13 @@
           }
         });
         // Replace YOUR_GOOGLE_SCRIPT_URL with your actual deployed URL from Google Apps Script
-        fetch("https://script.google.com/macros/s/AKfycbx9JOaNWgZQc9-wQ34NrCvl8XXx6BewrAu7Dl6exyWERK3HoscynLCxxA6StGuszXLC/exec", {
+        return fetch("https://script.google.com/macros/s/AKfycbx9JOaNWgZQc9-wQ34NrCvl8XXx6BewrAu7Dl6exyWERK3HoscynLCxxA6StGuszXLC/exec", {
           method: "POST",
           mode: "no-cors",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify(data)
-        })
-        .then(response => {
-          alert("Registration successful!");
-          // Inputs remain intact until the page is refreshed.
-        })
-        .catch(error => {
-          alert("There was an error submitting the form. Please try again.");
-          console.error("Error:", error);
         });
       }
     });
