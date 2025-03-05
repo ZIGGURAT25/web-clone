@@ -30,6 +30,95 @@
       position: relative;
       overflow-x: hidden;
     }
+
+    /* ---------------------------
+       Fixed Header with Hamburger Menu
+       --------------------------- */
+    header.header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      background: var(--dark-alt);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      z-index: 1000;
+    }
+    header.header .logo img {
+      width: 150px;
+      height: auto;
+    }
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    nav.nav {
+      display: flex;
+      gap: 1.25rem;
+    }
+    nav.nav a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    nav.nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.4s ease;
+      border-radius: 30px;
+      z-index: -1;
+    }
+    nav.nav a:hover {
+      color: var(--dark);
+    }
+    nav.nav a:hover::before {
+      width: 100%;
+    }
+    /* Remove hover effects on devices that don't support hover */
+    @media (hover: none) {
+      nav.nav a:hover {
+        background: none;
+        color: var(--light);
+      }
+      nav.nav a:hover::before {
+        width: 0%;
+      }
+    }
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+      nav.nav {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--dark-alt);
+        padding: 0.5rem 0;
+        display: none;
+      }
+      nav.nav.active {
+        display: flex;
+      }
+    }
+
     /* Poster Background with Decorations */
     .poster {
       position: relative;
@@ -38,6 +127,7 @@
       padding: 40px 20px;
       background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
       overflow: hidden;
+      padding-top: 100px; /* extra top padding to offset fixed header */
     }
     /* Triangles */
     .triangle {
@@ -76,80 +166,6 @@
       50% { transform: translate(20px, -20px) rotate(15deg); }
       100% { transform: translate(-20px, 20px) rotate(-15deg); }
     }
-    /* Shapes */
-    .shape {
-      position: absolute;
-      z-index: 0;
-      opacity: 0.4;
-    }
-    .shape.circle { border-radius: 50%; }
-    @keyframes float-circle {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(20px, 20px) scale(1.1); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-    .shape.circle.shape-1 {
-      width: 100px;
-      height: 100px;
-      background: var(--accent);
-      top: 10%;
-      right: 50%;
-      animation: float-circle 20s infinite alternate;
-    }
-    @keyframes rotate-square {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.1); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-    .shape.square.shape-2 {
-      width: 80px;
-      height: 80px;
-      background: var(--primary);
-      bottom: 20%;
-      left: 20%;
-      animation: rotate-square 25s infinite linear;
-    }
-    @keyframes float-diamond {
-      0% { transform: translate(0, 0) rotate(45deg); }
-      50% { transform: translate(-20px, 20px) rotate(45deg); }
-      100% { transform: translate(0, 0) rotate(45deg); }
-    }
-    .shape.diamond.shape-3 {
-      width: 70px;
-      height: 70px;
-      background: var(--secondary);
-      top: 60%;
-      right: 20%;
-      transform: rotate(45deg);
-      animation: float-diamond 22s infinite alternate;
-    }
-    @keyframes float-circle2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(15px, -15px) scale(1.05); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-    .shape.circle.shape-4 {
-      width: 80px;
-      height: 80px;
-      background: var(--secondary);
-      top: 30%;
-      left: 10%;
-      animation: float-circle2 18s infinite alternate;
-    }
-    @keyframes float-diamond2 {
-      0% { transform: translate(0, 0) rotate(45deg); }
-      50% { transform: translate(10px, -10px) rotate(45deg); }
-      100% { transform: translate(0, 0) rotate(45deg); }
-    }
-    .shape.diamond.shape-5 {
-      width: 60px;
-      height: 60px;
-      background: var(--secondary-hover);
-      bottom: 30%;
-      left: 5%;
-      transform: rotate(45deg);
-      animation: float-diamond2 20s infinite alternate;
-    }
     /* Noise Overlay */
     .noise {
       position: absolute;
@@ -162,7 +178,6 @@
       z-index: 1;
       pointer-events: none;
     }
-    /* Particle Container */
     .particles-container {
       position: absolute;
       top: 0;
@@ -184,7 +199,7 @@
       0% { transform: translateY(100vh) translateX(0); opacity: 0; }
       10% { opacity: 0.6; }
       90% { opacity: 0.6; }
-      100% { transform: translateY(-50px) translateX(calc(sin(var(--random-offset)) * 100px)); opacity: 0; }
+      100% { transform: translateY(-50px) translateX(0); opacity: 0; }
     }
 
     /* Main Container Content */
@@ -250,16 +265,25 @@
   </style>
 </head>
 <body>
+  <!-- Fixed Header with Hamburger Menu (Modified as requested) -->
+  <header class="header">
+    <div class="logo">
+      <img src="asset/college.webp" alt="College Logo and Name" />
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <nav class="nav" id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="registration.html">Registration</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
   <div class="poster">
     <!-- Background Decorations -->
     <div class="triangle triangle-1"></div>
     <div class="triangle triangle-2"></div>
     <div class="triangle triangle-3"></div>
-    <div class="shape circle shape-1"></div>
-    <div class="shape square shape-2"></div>
-    <div class="shape diamond shape-3"></div>
-    <div class="shape circle shape-4"></div>
-    <div class="shape diamond shape-5"></div>
     <div class="noise"></div>
     <div class="particles-container"></div>
 
@@ -287,8 +311,14 @@
     </div>
   </div>
 
-  <!-- Particle Generation Script -->
+  <!-- JavaScript for Header Toggle and Particle Generation -->
   <script>
+    // Toggle mobile menu
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('active');
+    }
+
+    // Particle Generation: Create particles for the background
     document.addEventListener('DOMContentLoaded', function() {
       const particlesContainer = document.querySelector('.particles-container');
       if (particlesContainer) {

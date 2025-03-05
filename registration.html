@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ziggurat'25 Registration</title>
   <style>
+    /* Import Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700;900&display=swap');
 
     :root {
@@ -30,72 +31,14 @@
       box-sizing: border-box;
     }
 
+    /* Body Background & Global Styles */
     body {
       font-family: 'Poppins', 'Inter', sans-serif;
-      background-color: var(--dark);
+      background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
       color: var(--light);
       line-height: 1.6;
-    }
-
-    /* Widescreen Container */
-    .container {
-      max-width: 100%;
-      margin: 20px auto;
-      min-height: 100vh;
-      padding: 40px;
-      background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
-      border-radius: 15px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
       position: relative;
-      overflow: hidden;
-    }
-
-    /* Header */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      margin-bottom: 30px;
-    }
-    .header .logo img {
-      width: 150px;
-      height: auto;
-    }
-
-    /* Navigation with Gradient Hover */
-    .nav-bar {
-      display: flex;
-      gap: 20px;
-    }
-    .nav-bar a {
-      color: var(--light);
-      text-decoration: none;
-      font-weight: 600;
-      padding: 8px 20px;
-      border-radius: 30px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    .nav-bar a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      transition: width 0.4s ease;
-      border-radius: 30px;
-      pointer-events: none;
-      z-index: -1;
-    }
-    .nav-bar a:hover {
-      color: var(--light) !important;
-    }
-    .nav-bar a:hover::before {
-      width: 100%;
+      overflow-x: hidden;
     }
 
     /* Background Elements */
@@ -155,7 +98,105 @@
       z-index: 0;
     }
 
-    /* Registration Form Styles (Unchanged) */
+    /* Fixed Header with Hamburger Menu (Modified to be anchored on the right) */
+    header.header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      background: var(--dark-alt);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      z-index: 1000;
+    }
+    header.header .logo img {
+      width: 150px;
+      height: auto;
+    }
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    nav.nav {
+      display: flex;
+      gap: 1.25rem;
+    }
+    nav.nav a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    nav.nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.4s ease;
+      border-radius: 30px;
+      z-index: -1;
+    }
+    nav.nav a:hover {
+      color: var(--dark);
+    }
+    nav.nav a:hover::before {
+      width: 100%;
+    }
+    /* Remove hover effects on devices that don't support hover */
+    @media (hover: none) {
+      nav.nav a:hover {
+        background: none;
+        color: var(--light);
+      }
+      nav.nav a:hover::before {
+        width: 0%;
+      }
+    }
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+      nav.nav {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--dark-alt);
+        padding: 0.5rem 0;
+        display: none;
+      }
+      nav.nav.active {
+        display: flex;
+      }
+    }
+
+    /* Main Container (Transparent for background visibility) */
+    .container {
+      max-width: 100%;
+      margin: 100px auto 20px; /* top margin to offset fixed header */
+      padding: 40px;
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      z-index: 2;
+    }
+
+    /* Registration Form Styles */
     .registration {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
@@ -165,6 +206,8 @@
       margin: 0 auto 40px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       border: 1px solid var(--gray-100);
+      position: relative;
+      z-index: 3;
     }
     .registration h2 {
       text-align: center;
@@ -201,7 +244,6 @@
       box-shadow: 0 0 5px var(--accent);
       outline: none;
     }
-    /* Fully Customized Select Component */
     .custom-select {
       position: relative;
       display: flex;
@@ -238,16 +280,23 @@
       border: 1px solid var(--gray-100);
       padding: 10px;
       border-radius: 5px;
+      margin-bottom: 15px;
     }
     .registration fieldset legend {
       padding: 0 5px;
       font-size: 1rem;
       color: var(--light);
     }
-    .registration fieldset div {
-      margin-bottom: 10px;
-    }
-    /* Event Options as Toggle Buttons */
+    /* Segmented Events by Slots */
+    /* Slot 1 */
+    #slot1 { }
+    /* Slot 2 */
+    #slot2 { }
+    /* Slot 3 */
+    #slot3 { }
+    /* Common Event */
+    #commonEvent { }
+    
     .event-option {
       display: inline-block;
       margin-right: 10px;
@@ -303,53 +352,136 @@
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0,245,160,0.3);
     }
-
-    /* Responsive Adjustments */
+    .spinner {
+      display: none;
+      border: 4px solid var(--gray-200);
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .flip-counter {
+      display: inline-block;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--light);
+      perspective: 1000px;
+      will-change: transform;
+    }
+    .flip-counter.flip {
+      animation: flipAnimation 0.6s;
+    }
+    @keyframes flipAnimation {
+      0% { transform: rotateX(0deg); }
+      50% { transform: rotateX(-90deg); }
+      100% { transform: rotateX(0deg); }
+    }
     @media (max-width: 768px) {
       .container {
         padding: 20px;
-        margin: 10px;
+        margin: 100px 10px 10px; /* top margin still to offset fixed header */
       }
-      .header, .nav-bar {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .nav-bar a {
+      nav.nav a {
         padding: 10px 15px;
       }
       .registration {
         padding: 20px;
         margin-bottom: 30px;
       }
+      .event-option label {
+        min-width: 140px;
+      }
+    }
+    
+    /* Modal Popup Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      z-index: 1000;
+    }
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--light);
+      color: var(--dark);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1001;
+      max-width: 90%;
+      text-align: center;
+    }
+    .modal h3 {
+      margin-bottom: 10px;
+    }
+    .modal p {
+      margin-bottom: 20px;
+    }
+    .modal button {
+      padding: 8px 16px;
+      border: none;
+      background: var(--accent);
+      color: var(--dark);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    /* Particle Animation */
+    @keyframes particle-rise {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
+  <!-- Background Elements -->
+  <div class="triangle triangle-1"></div>
+  <div class="triangle triangle-2"></div>
+  <div class="triangle triangle-3"></div>
+  <div class="noise"></div>
+  <div class="particles-container"></div>
+  
+  <!-- Modal Popup -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="modal">
+    <h3 id="modalTitle"></h3>
+    <p id="modalMessage"></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+  
+  <!-- Fixed Header with Hamburger Menu (Modified as requested) -->
+  <header class="header">
+    <div class="logo">
+      <img src="asset/college.webp" alt="College Logo and Name" />
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <nav class="nav" id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="registration.html">Registration</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <!-- Main Container -->
   <div class="container">
-    <!-- Background Elements -->
-    <div class="triangle triangle-1"></div>
-    <div class="triangle triangle-2"></div>
-    <div class="triangle triangle-3"></div>
-    <div class="noise"></div>
-    <div class="particles-container"></div>
-    
-    <!-- Header -->
-    <header class="header">
-      <div class="logo">
-        <img src="asset/college.webp" alt="College Logo">
-      </div>
-      <nav class="nav-bar">
-        <a href="index.html">Home</a>
-        <a href="registration.html">Registration</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </header>
-    
-    <!-- Registration Form Section -->
     <section class="registration">
       <h2>Registration</h2>
-      <form id="registrationForm" action="#" method="post" novalidate>
+      <form id="registrationForm" novalidate>
         <div>
           <label for="name">Name</label>
           <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -388,77 +520,104 @@
             <option value="4">4th Year</option>
           </select>
         </div>
-        <fieldset>
-          <legend>Events Participating In</legend>
+        
+        <!-- Segmented Events -->
+        <fieldset id="slot1">
+          <legend>Slot 1 (9:45 am to 10:45 am)</legend>
           <div class="event-option">
-            <input type="checkbox" id="event1" name="events" value="Civil Hackathon / Civilathon">
-            <label for="event1">Civil Hackathon / Civilathon</label>
+            <input type="checkbox" id="event1" name="events" value="1. Paper and Poster Presentation (Ceremony Hall)">
+            <label for="event1">1. Paper and Poster Presentation (Ceremony Hall)</label>
           </div>
           <div class="event-option">
-            <input type="checkbox" id="event2" name="events" value="Paper and Poster Presentation">
-            <label for="event2">Paper and Poster Presentation</label>
+            <input type="checkbox" id="event2" name="events" value="2. Master CAD (CAD Lab)">
+            <label for="event2">2. Master CAD (CAD Lab)</label>
           </div>
           <div class="event-option">
-            <input type="checkbox" id="event3" name="events" value="Auto CAD - Master CAD">
-            <label for="event3">Auto CAD - Master CAD</label>
+            <input type="checkbox" id="event3" name="events" value="3. Reflex and Debate (Classroom 1)">
+            <label for="event3">3. Reflex and Debate (Classroom 1)</label>
           </div>
           <div class="event-option">
-            <input type="checkbox" id="event4" name="events" value="Technical Quiz - CiviQuiz">
-            <label for="event4">Technical Quiz - CiviQuiz</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event5" name="events" value="Code Book Test - Code Crack">
-            <label for="event5">Code Book Test - Code Crack</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event6" name="events" value="Treasure Hunt - Load and Locate">
-            <label for="event6">Treasure Hunt - Load and Locate</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event7" name="events" value="Master Builder">
-            <label for="event7">Master Builder</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event8" name="events" value="Arm Wrestling - Concrete Hands">
-            <label for="event8">Arm Wrestling - Concrete Hands</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event9" name="events" value="Scan and Plan">
-            <label for="event9">Scan and Plan</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event10" name="events" value="Connections - Link N Build">
-            <label for="event10">Connections - Link N Build</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event11" name="events" value="Kollywood Quiz - Bridge to Blockbuster">
-            <label for="event11">Kollywood Quiz - Bridge to Blockbuster</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event12" name="events" value="Block and Tackle - Reflex Debate">
-            <label for="event12">Block and Tackle - Reflex Debate</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event13" name="events" value="Cube Testing - Cube Clash">
-            <label for="event13">Cube Testing - Cube Clash</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event14" name="events" value="Model Exhibition - Structocon">
-            <label for="event14">Model Exhibition - Structocon</label>
-          </div>
-          <div class="event-option">
-            <input type="checkbox" id="event15" name="events" value="Photography - Name will be updated">
-            <label for="event15">Photography - Name will be updated</label>
+            <input type="checkbox" id="event4" name="events" value="4. Link 'N' Build (Classroom with TV)">
+            <label for="event4">4. Link 'N' Build (Classroom with TV)</label>
           </div>
         </fieldset>
+        
+        <fieldset id="slot2">
+          <legend>Slot 2 (11:00 am to 12:00 pm)</legend>
+          <div class="event-option">
+            <input type="checkbox" id="event5" name="events" value="5. CiviQuest (Classroom 2)">
+            <label for="event5">5. CiviQuest (Classroom 2)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event6" name="events" value="6. Civilathon (Classroom with TV)">
+            <label for="event6">6. Civilathon (Classroom with TV)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event7" name="events" value="7. Bridge to Blockbuster (Classroom 1 with Projector)">
+            <label for="event7">7. Bridge to Blockbuster (Classroom 1 with Projector)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event8" name="events" value="8. Master Builder (Concrete / Soil Lab)">
+            <label for="event8">8. Master Builder (Concrete / Soil Lab)</label>
+          </div>
+        </fieldset>
+        
+        <fieldset id="slot3">
+          <legend>Slot 3 (12:15 pm to 1:15 pm)</legend>
+          <div class="event-option">
+            <input type="checkbox" id="event9" name="events" value="9. Scan and Plan (Classroom with Projector)">
+            <label for="event9">9. Scan and Plan (Classroom with Projector)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event10" name="events" value="10. Code Crack (Classroom 1)">
+            <label for="event10">10. Code Crack (Classroom 1)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event11" name="events" value="11. Concrete Hands (Near Research Lab)">
+            <label for="event11">11. Concrete Hands (Near Research Lab)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event12" name="events" value="12. Pillars and Pixel (Open Space/ Gather near lab)">
+            <label for="event12">12. Pillars and Pixel (Open Space/ Gather near lab)</label>
+          </div>
+        </fieldset>
+        
+        <fieldset id="commonEvent">
+          <legend>Common Event (10:00 am to 1:00 pm)</legend>
+          <div class="event-option">
+            <input type="checkbox" id="event13" name="events" value="13. Cube Clash (Research Lab)">
+            <label for="event13">13. Cube Clash (Research Lab)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event14" name="events" value="14. Load and Locate (Open Space)">
+            <label for="event14">14. Load and Locate (Open Space)</label>
+          </div>
+          <div class="event-option">
+            <input type="checkbox" id="event15" name="events" value="15. Structocon (Ceremony Hall)">
+            <label for="event15">15. Structocon (Ceremony Hall)</label>
+          </div>
+        </fieldset>
+        
+        <!-- Workshop Fieldset with Flip Counter -->
+        <fieldset id="workshopFieldset">
+          <legend>Workshop</legend>
+          <div class="event-option">
+            <input type="checkbox" id="workshop" name="events" value="Workshop">
+            <label for="workshop">Workshop</label>
+          </div>
+        </fieldset>
+        <p id="counterNote" style="font-size: 1rem; color: var(--light); text-align: center; margin-top: 15px;">
+          Registration Fee: Rs. <span id="flipCounter" class="flip-counter">100</span>
+          (Additional Rs.50 for Workshop, Total Rs.150 if selected). Payment will be collected at the event venue.
+        </p>
+
         <button type="submit">Register Now</button>
       </form>
     </section>
   </div>
   
-  <!-- JavaScript for Particle Generation, Validation, and Google Sheets Integration -->
   <script>
-    // Particle Generation
+    // Particle Generation: Create 30 particles for a lightweight animated effect
     document.addEventListener('DOMContentLoaded', function() {
       const particlesContainer = document.querySelector('.particles-container');
       if (particlesContainer) {
@@ -472,18 +631,57 @@
           particle.style.opacity = 0.6;
           particle.style.animation = 'particle-rise 15s infinite linear';
           const randomLeft = Math.random() * 100;
-          const randomOffset = Math.random();
           particle.style.left = `${randomLeft}%`;
-          particle.style.setProperty('--random-offset', randomOffset);
           particle.style.animationDelay = `${Math.random() * 15}s`;
           particlesContainer.appendChild(particle);
         }
       }
     });
-
-    // Inline Validation for Required Fields, Email, and Phone Number
+    
+    // Mobile Hamburger Menu Toggle
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('active');
+    }
+    
+    // Modal Popup Functions
+    function openModal(title, message) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMessage').textContent = message;
+      document.getElementById('modalOverlay').style.display = 'block';
+      document.getElementById('modal').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').style.display = 'none';
+      document.getElementById('modal').style.display = 'none';
+    }
+    
+    // Flip Counter for Workshop Payment Amount
     document.addEventListener('DOMContentLoaded', function() {
-      const form = document.querySelector('form');
+      const workshopCheckbox = document.getElementById('workshop');
+      const flipCounterElem = document.getElementById('flipCounter');
+      
+      function updateFlipCounter(newAmount) {
+        flipCounterElem.textContent = newAmount;
+        flipCounterElem.classList.add('flip');
+        flipCounterElem.addEventListener('animationend', function() {
+          flipCounterElem.classList.remove('flip');
+        }, { once: true });
+      }
+      
+      function updateCounter() {
+        const amount = workshopCheckbox.checked ? 150 : 100;
+        updateFlipCounter(amount);
+      }
+      
+      if (workshopCheckbox) {
+        workshopCheckbox.addEventListener('change', updateCounter);
+        updateCounter();
+      }
+    });
+    
+    // Inline Validation and Google Sheets Integration
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('registrationForm');
       
       form.addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent default submission
@@ -504,17 +702,30 @@
           }
         });
         if (valid) {
-          // Provide loading feedback
+          // Local save: Save form data to localStorage before sending
+          const formDataObj = {};
+          new FormData(form).forEach((value, key) => {
+            if (formDataObj[key]) {
+              if (!Array.isArray(formDataObj[key])) {
+                formDataObj[key] = [formDataObj[key]];
+              }
+              formDataObj[key].push(value);
+            } else {
+              formDataObj[key] = value;
+            }
+          });
+          localStorage.setItem("registrationData", JSON.stringify(formDataObj));
+          
           const submitButton = form.querySelector('button[type="submit"]');
           submitButton.disabled = true;
           submitButton.textContent = "Loading...";
-          
-          // Send data to Google Sheets
           sendDataToSheets(new FormData(form))
             .then(() => {
-              alert("Registration successful!");
-              submitButton.disabled = false;
-              submitButton.textContent = "Register Now";
+              // Remove local saved data on success
+              localStorage.removeItem("registrationData");
+              // Redirect to success page with amount parameter from the registration page
+              const amount = document.getElementById('workshop').checked ? 150 : 100;
+              window.location.href = "success.html?amount=" + amount;
             })
             .catch(error => {
               alert("There was an error submitting the form. Please try again.");
@@ -554,6 +765,8 @@
         if (!errorSpan) {
           errorSpan = document.createElement('span');
           errorSpan.className = 'error-message';
+          errorSpan.style.color = 'red';
+          errorSpan.style.fontSize = '0.9rem';
           input.parentNode.appendChild(errorSpan);
         }
         errorSpan.textContent = message;
@@ -566,7 +779,7 @@
         }
       }
       
-      // Integration with Google Sheets via Google Apps Script
+      // Google Sheets Integration via Google Apps Script with a timeout fallback
       function sendDataToSheets(formData) {
         const data = {};
         formData.forEach((value, key) => {
@@ -579,8 +792,11 @@
             data[key] = value;
           }
         });
-        // Replace YOUR_GOOGLE_SCRIPT_URL with your actual deployed URL from Google Apps Script
-        return fetch("https://script.google.com/macros/s/AKfycbzup_oqGvrvCH0feAo5pfB_Z5_ALwsmTjA3yknDN9q1_0JOJHGslZlU8s4xSfAk5GHM/exec", {
+        // Add totalAmount to the data object based on the workshop selection.
+        data.totalAmount = document.getElementById('workshop').checked ? 150 : 100;
+        
+        // Replace the URL below with your actual deployed Google Apps Script URL
+        const fetchPromise = fetch("https://script.google.com/macros/s/AKfycbz73Sw0DcNwX_AkYqkTfNSMrXRwfh8VuUyqiIEUvi3C47TSbaNNy8pilmKWjos6-AOh/exec", {
           method: "POST",
           mode: "no-cors",
           headers: {
@@ -588,6 +804,9 @@
           },
           body: JSON.stringify(data)
         });
+        // Timeout fallback after 2 seconds so the registration doesn't get stuck
+        const timeoutPromise = new Promise(resolve => setTimeout(resolve, 2000));
+        return Promise.race([fetchPromise, timeoutPromise]);
       }
     });
   </script>

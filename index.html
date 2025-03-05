@@ -13,7 +13,7 @@
       margin: 10mm;
     }
     @media print {
-      .triangle, .noise, .particle, .modal, .shape, .card-overlay, .particle-layer {
+      .triangle, .noise, .particle, .modal, .modal-overlay, .card-overlay, .particle-layer {
         display: none !important;
       }
       body {
@@ -55,11 +55,12 @@
       background-color: var(--dark);
       color: var(--light);
       line-height: 1.6;
+      padding-top: 80px; /* offset for fixed header */
     }
     .poster {
       width: 100%;
       min-height: 100vh;
-      padding: 40px;
+      padding: 2rem;
       position: relative;
       overflow: hidden;
       background: radial-gradient(circle at top right, var(--dark-alt), var(--dark));
@@ -69,6 +70,92 @@
       z-index: 2;
       max-width: 1200px;
       margin: 0 auto;
+    }
+    /* ---------------------------
+       Fixed Header with Mobile Hamburger Menu
+       --------------------------- */
+    header.header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--dark-alt);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      z-index: 1000;
+    }
+    header.header .logo img {
+      width: 150px;
+      height: auto;
+    }
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    nav.nav {
+      display: flex;
+      gap: 1.25rem;
+    }
+    nav.nav a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    nav.nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.4s ease;
+      border-radius: 30px;
+      z-index: -1;
+    }
+    nav.nav a:hover {
+      color: var(--dark);
+    }
+    nav.nav a:hover::before {
+      width: 100%;
+    }
+    @media (hover: none) {
+      nav.nav a:hover {
+        background: none;
+        color: var(--light);
+      }
+      nav.nav a:hover::before {
+        width: 0%;
+      }
+    }
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+      nav.nav {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--dark-alt);
+        padding: 0.5rem 0;
+        display: none;
+      }
+      nav.nav.active {
+        display: flex;
+      }
     }
     /* ---------------------------
        Background Animations & Shapes
@@ -109,95 +196,6 @@
       50% { transform: translate(20px, -20px) rotate(15deg); }
       100% { transform: translate(-20px, 20px) rotate(-15deg); }
     }
-    .shape {
-      position: absolute;
-      z-index: 0;
-      opacity: 0.4;
-    }
-    .shape.circle { border-radius: 50%; }
-    @keyframes float-circle {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(20px, 20px) scale(1.1); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-    .shape.circle.shape-1 {
-      width: 100px;
-      height: 100px;
-      background: var(--accent);
-      top: 10%;
-      right: 50%;
-      animation: float-circle 20s infinite alternate;
-    }
-    @keyframes rotate-square {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.1); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-    .shape.square.shape-2 {
-      width: 80px;
-      height: 80px;
-      background: var(--primary);
-      bottom: 20%;
-      left: 20%;
-      animation: rotate-square 25s infinite linear;
-    }
-    @keyframes float-diamond {
-      0% { transform: translate(0, 0) rotate(45deg); }
-      50% { transform: translate(-20px, 20px) rotate(45deg); }
-      100% { transform: translate(0, 0) rotate(45deg); }
-    }
-    .shape.diamond.shape-3 {
-      width: 70px;
-      height: 70px;
-      background: var(--secondary);
-      top: 60%;
-      right: 20%;
-      transform: rotate(45deg);
-      animation: float-diamond 22s infinite alternate;
-    }
-    @keyframes float-circle2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(15px, -15px) scale(1.05); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
-    .shape.circle.shape-4 {
-      width: 80px;
-      height: 80px;
-      background: var(--secondary);
-      top: 30%;
-      left: 10%;
-      animation: float-circle2 18s infinite alternate;
-    }
-    @keyframes float-diamond2 {
-      0% { transform: translate(0, 0) rotate(45deg); }
-      50% { transform: translate(10px, -10px) rotate(45deg); }
-      100% { transform: translate(0, 0) rotate(45deg); }
-    }
-    .shape.diamond.shape-5 {
-      width: 60px;
-      height: 60px;
-      background: var(--accent-darker);
-      bottom: 30%;
-      left: 5%;
-      transform: rotate(45deg);
-      animation: float-diamond2 20s infinite alternate;
-    }
-    /* Global Particle Animation */
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background-color: var(--accent);
-      width: 2px;
-      height: 2px;
-      animation: particle-rise 15s infinite linear;
-      opacity: 0.6;
-    }
-    @keyframes particle-rise {
-      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.6; }
-      100% { transform: translateY(-50px) translateX(calc(sin(var(--random-offset)) * 100px)); opacity: 0; }
-    }
     .noise {
       position: absolute;
       top: 0;
@@ -209,52 +207,28 @@
       z-index: 1;
       pointer-events: none;
     }
-    /* ---------------------------
-       Header & Navigation
-       --------------------------- */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 40px;
-      padding: 0 20px;
-    }
-    .header .logo img {
-      width: 150px;
-      height: auto;
-    }
-    .nav-bar {
-      display: flex;
-      gap: 20px;
-    }
-    .nav-bar a {
-      color: var(--light);
-      text-decoration: none;
-      font-weight: 600;
-      padding: 8px 20px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    .nav-bar a::before {
-      content: '';
+    .particles-container {
       position: absolute;
       top: 0;
       left: 0;
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      z-index: -1;
-      transition: width 0.4s ease;
-      border-radius: 30px;
-    }
-    .nav-bar a:hover {
-      color: var(--dark);
-    }
-    .nav-bar a:hover::before {
       width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: var(--accent);
+      width: 2px;
+      height: 2px;
+      animation: particle-rise 15s infinite linear;
+      opacity: 0.6;
+    }
+    @keyframes particle-rise {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-50px); opacity: 0; }
     }
     /* ---------------------------
        Department & Event Showcase
@@ -263,11 +237,11 @@
       width: 100%;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gray-100), transparent);
-      margin: 30px 0;
+      margin: 1.875rem 0;
     }
     .department {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 3.125rem;
       position: relative;
     }
     .department::before {
@@ -286,7 +260,7 @@
       color: var(--light);
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 0.5rem;
     }
     .department h3:last-child {
       color: var(--accent);
@@ -294,8 +268,8 @@
     .event-showcase {
       text-align: center;
       position: relative;
-      padding: 60px 0;
-      margin-bottom: 70px;
+      padding: 3.75rem 0;
+      margin-bottom: 4.375rem;
     }
     .event-title-container {
       position: relative;
@@ -325,7 +299,7 @@
       position: absolute;
       top: 0;
       right: 0;
-      transform: translate(50%, -50%);
+      transform: translate(0, -50%);
       background: linear-gradient(135deg, var(--secondary), var(--primary));
       color: white;
       padding: 12px 25px;
@@ -430,7 +404,6 @@
       transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), background 0.6s ease, box-shadow 0.6s ease;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    /* Enhanced depth & glow effect on hover */
     .event:hover {
       transform: perspective(1000px) translateZ(-30px) scale(0.98);
       background: rgba(255, 255, 255, 0.05);
@@ -462,7 +435,6 @@
       flex-grow: 1;
       transition: transform 0.6s ease;
     }
-    /* Frosted overlay with 98% translucent effect */
     .card-overlay {
       position: absolute;
       top: 0;
@@ -482,18 +454,6 @@
     .event:hover .card-overlay {
       opacity: 1;
     }
-    /* Particle layer covering the overlay */
-    .particle-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-    /* Vertically stacked buttons above the particle layer */
     .card-overlay button {
       position: relative;
       z-index: 2;
@@ -532,7 +492,7 @@
        --------------------------- */
     .sections-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
       margin-top: 40px;
     }
@@ -610,47 +570,132 @@
       background: var(--primary);
       transform: translateY(-5px);
     }
+    @media (max-width: 480px) {
+      .date-tag {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+      }
+      .event-title {
+        font-size: 3.5rem;
+      }
+    }
+    /* ---------------------------
+       Mobile Overrides for Event Card Overlay
+       --------------------------- */
     @media (max-width: 768px) {
-      .poster { padding: 20px; }
-      .header { flex-wrap: wrap; }
-      .nav-bar { flex-wrap: wrap; justify-content: center; gap: 10px; }
-      .nav-bar a { padding: 10px 15px; }
-      .sponsor-logos img { width: 100px; }
-      .event-showcase { padding: 40px 0; }
-      .event-title { font-size: 4rem; }
-      .event-subtitle { font-size: 1.2rem; }
-      .events-container { flex-direction: column; align-items: center; }
-      .sections-container { grid-template-columns: 1fr; }
-      .date-tag { font-size: 0.9rem; padding: 10px 20px; }
+      .card-overlay {
+        opacity: 1 !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: none;
+      }
+      .card-overlay button {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none;
+      }
+      .event:hover .card-overlay {
+        opacity: 1;
+      }
+      .event-content .event-thumbnail {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+    }
+    /* ---------------------------
+       Modal Overlay & Modal (Enhanced Responsiveness)
+       --------------------------- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--light);
+      color: var(--dark);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1001;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .modal .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+      z-index: 1002;
+    }
+    /* Simple styling for structured info */
+    .modal h3 {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+    .modal h4 {
+      margin: 10px 0 5px;
+    }
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    .modal table, .modal th, .modal td {
+      border: 1px solid #ccc;
+    }
+    .modal th, .modal td {
+      padding: 5px;
+      text-align: left;
+    }
+    .modal ul, .modal ol {
+      margin-left: 20px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
+  <!-- Fixed Header with Hamburger Menu -->
+  <header class="header">
+    <div class="logo">
+      <img src="asset/college.webp" alt="College Logo and Name" />
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <nav class="nav" id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="registration.html">Registration</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
   <div class="poster">
     <!-- Animated Background Shapes -->
     <div class="triangle triangle-1"></div>
     <div class="triangle triangle-2"></div>
     <div class="triangle triangle-3"></div>
-    <div class="shape circle shape-1"></div>
-    <div class="shape square shape-2"></div>
-    <div class="shape diamond shape-3"></div>
-    <div class="shape circle shape-4"></div>
-    <div class="shape diamond shape-5"></div>
     <div class="noise"></div>
     <div class="particles-container"></div>
     <!-- Main Content -->
     <div class="content">
-      <header class="header">
-        <div class="logo">
-          <img src="asset/college.webp" alt="College Logo and Name" />
-        </div>
-        <nav class="nav-bar">
-          <a href="index.html">Home</a>
-          <a href="registration.html">Registration</a>
-          <a href="schedule.html">Schedule</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-      </header>
       <div class="divider"></div>
       <div class="department">
         <h3>DEPARTMENT OF CIVIL ENGINEERING</h3>
@@ -673,58 +718,11 @@
           <img src="https://via.placeholder.com/150?text=Sponsor+4" alt="Sponsor 4" />
         </div>
       </div>
-      <!-- Events Section with Enhanced Depth & Frosted Particle Overlay -->
+      <!-- Events Section (Events are generated dynamically) -->
       <div class="events-section">
         <h2>Our Events</h2>
-        <div class="events-container">
-          <!-- Example Event Card -->
-          <div class="event" data-title="Civil Hackathon / Civilathon" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Dhanya.K</p>">
-            <div class="event-content">
-              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
-              <h3>Civil Hackathon / Civilathon</h3>
-            </div>
-            <!-- Frosted overlay with 98% opacity and particle layer -->
-            <div class="card-overlay">
-              <div class="particle-layer"></div>
-              <button class="info-btn">Info</button>
-              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
-            </div>
-          </div>
-          <!-- Additional Event Cards -->
-          <div class="event" data-title="Paper and Poster Presentation" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Vignesh.M</p>">
-            <div class="event-content">
-              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
-              <h3>Paper and Poster Presentation</h3>
-            </div>
-            <div class="card-overlay">
-              <div class="particle-layer"></div>
-              <button class="info-btn">Info</button>
-              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
-            </div>
-          </div>
-          <div class="event" data-title="Auto CAD - Master CAD" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Dharshan.P</p>">
-            <div class="event-content">
-              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
-              <h3>Auto CAD - Master CAD</h3>
-            </div>
-            <div class="card-overlay">
-              <div class="particle-layer"></div>
-              <button class="info-btn">Info</button>
-              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
-            </div>
-          </div>
-          <div class="event" data-title="Technical Quiz - CiviQuiz" data-info="<p><strong>Faculty Coordinator:</strong> TBD</p><p><strong>Student Coordinator:</strong> Priyadharshini.K</p>">
-            <div class="event-content">
-              <img class="event-thumbnail" src="https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg" alt="Event Thumbnail" />
-              <h3>Technical Quiz - CiviQuiz</h3>
-            </div>
-            <div class="card-overlay">
-              <div class="particle-layer"></div>
-              <button class="info-btn">Info</button>
-              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
-            </div>
-          </div>
-          <!-- More cards can be added in the same format -->
+        <div class="events-container" id="eventsContainer">
+          <!-- Event cards will be inserted here dynamically -->
         </div>
       </div>
       <!-- Additional Sections -->
@@ -756,36 +754,196 @@
       </div>
     </div>
   </div>
-  <!-- Modal for Event Info -->
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <!-- Modal for Event Info (Enhanced Responsiveness) -->
   <div class="modal" id="eventModal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="closeModal()">×</button>
-      <h3 id="modal-title"></h3>
-      <div id="modal-info"></div>
-      <a class="register-btn" href="registration.html">Register Now</a>
-    </div>
+    <button class="close-modal" onclick="closeModal()">×</button>
+    <h3 id="modal-title"></h3>
+    <div id="modal-info"></div>
   </div>
   <!-- JavaScript -->
   <script>
-    // Modal functionality for Info buttons
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('active');
+    }
+    
+    // Dynamic Events Data – Easily add or edit events here.
+    const eventsData = [
+      {
+        title: "Paper and Poster Presentation",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Master CAD",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Reflex and Debate",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Link 'N' Build",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "CiviQuest",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Civilathon",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Bridge to Blockbuster",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Master Builder",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Scan and Plan",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<h3>EVENT NAME: SCAN AND PLAN</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Vennila KT</td><td>8778734794</td></tr>
+                 <tr><td>Vinodhini V</td><td>9626 02731</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ul>
+                 <li>The event duration is 1 hour.</li>
+                 <li>Round 1 (Individual Task - Writing Analysis):
+                     <ul>
+                       <li>A general video will be played.</li>
+                       <li>Participants will have 5-10 minutes to write their analysis on paper.</li>
+                       <li>Based on their responses, participants will be filtered, and selected ones will form teams for the next round.</li>
+                     </ul>
+                 </li>
+                 <li>Round 2 (Team Task - Rapid Fire Round):
+                     <ul>
+                       <li>Shortlisted participants will be grouped into teams of 3 members.</li>
+                       <li>A civil engineering-related video will be played.</li>
+                       <li>Teams will then face a rapid-fire quiz based on the video and general civil engineering topics.</li>
+                       <li>Stationery (Paper &amp; Pens) will be provided.</li>
+                     </ul>
+                 </li>
+                 <li>Judging Criteria: The team with the highest total points in the rapid-fire round will be declared the winner.</li>
+               </ul>`
+      },
+      {
+        title: "Cube Clash",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<h3>EVENT NAME: CUBE CLASH</h3>
+               <h4>CO-ORDINATORS</h4>
+               <p>Dharshan P - 9150856366</p>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>The team should cast a cube for M40 grade Concrete</li>
+                 <li>Compression strength will be tested for 14th day</li>
+                 <li>No admixture should be used</li>
+                 <li>Team should submit softcopy of the design one day before the event and the design should follow the standards.</li>
+                 <li>Add casting video</li>
+                 <li>The team should submit three cubes covered with aluminium foil.</li>
+                 <li>Maximum No. of members in a team is 3</li>
+               </ol>`
+      },
+      {
+        title: "Code Crack",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Concrete Hands",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Pillars and Pixel",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Load and Locate",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      },
+      {
+        title: "Structocon",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
+               <p><strong>Student Coordinator:</strong> TBD</p>`
+      }
+    ];
+    
+    // Function to generate event cards dynamically
+    function generateEvents() {
+      const container = document.getElementById('eventsContainer');
+      container.innerHTML = eventsData.map(event => {
+        return `
+          <div class="event" data-title="${event.title}" data-info="${event.info.replace(/"/g, '&quot;')}">
+            <div class="event-content">
+              <img class="event-thumbnail" src="${event.image}" alt="Event Thumbnail" />
+              <h3>${event.title}</h3>
+            </div>
+            <div class="card-overlay">
+              <div class="particle-layer"></div>
+              <button class="info-btn">Info</button>
+              <button class="register-btn" onclick="location.href='registration.html'">Register</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    generateEvents();
+    
+    // Modal functionality
     const modal = document.getElementById('eventModal');
+    const overlay = document.getElementById('modalOverlay');
     const modalTitle = document.getElementById('modal-title');
     const modalInfo = document.getElementById('modal-info');
-
+    
     document.querySelectorAll('.info-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();
         const eventCard = btn.closest('.event');
         modalTitle.innerHTML = eventCard.getAttribute('data-title');
         modalInfo.innerHTML = eventCard.getAttribute('data-info');
-        modal.classList.add('active');
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
       });
     });
-
+    
     function closeModal() {
-      modal.classList.remove('active');
+      modal.style.display = 'none';
+      overlay.style.display = 'none';
     }
-
+    
+    overlay.addEventListener('click', closeModal);
+    
     // Global Particles for background
     document.addEventListener('DOMContentLoaded', function() {
       const globalParticles = document.querySelector('.particles-container');
@@ -821,7 +979,7 @@
         }
       });
     });
-
+    
     // Keyframes for particles in overlay
     const styleEl = document.createElement('style');
     styleEl.innerHTML = `
@@ -831,6 +989,19 @@
       }
     `;
     document.head.appendChild(styleEl);
+    
+    // Optional: Mobile incremental glow on scroll
+    if (window.innerWidth <= 768) {
+      window.addEventListener('scroll', function() {
+        document.querySelectorAll('.card-overlay').forEach(overlay => {
+          if (window.scrollY > 100) {
+            overlay.classList.add('glow');
+          } else {
+            overlay.classList.remove('glow');
+          }
+        });
+      });
+    }
   </script>
 </body>
 </html>
