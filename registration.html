@@ -31,6 +31,11 @@
       box-sizing: border-box;
     }
 
+    /* Ensure no horizontal overflow on mobile */
+    html, body {
+      overflow-x: hidden;
+    }
+
     /* Body Background & Global Styles */
     body {
       font-family: 'Poppins', 'Inter', sans-serif;
@@ -38,7 +43,6 @@
       color: var(--light);
       line-height: 1.6;
       position: relative;
-      overflow-x: hidden;
     }
 
     /* Background Elements */
@@ -98,10 +102,11 @@
       z-index: 0;
     }
 
-    /* Fixed Header with Hamburger Menu (Modified to be anchored on the right) */
+    /* Fixed Header with Hamburger Menu (Anchored fully across the top) */
     header.header {
       position: fixed;
       top: 0;
+      left: 0;
       right: 0;
       width: 100%;
       background: var(--dark-alt);
@@ -463,7 +468,7 @@
     <button onclick="closeModal()">Close</button>
   </div>
   
-  <!-- Fixed Header with Hamburger Menu (Modified as requested) -->
+  <!-- Fixed Header with Hamburger Menu -->
   <header class="header">
     <div class="logo">
       <img src="asset/college.webp" alt="College Logo and Name" />
