@@ -220,6 +220,17 @@
       font-size: 2rem;
       color: var(--light);
     }
+    /* New Informational Message Block with Highlighted Styling */
+    .registration-info {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--accent);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      color: var(--light);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
     .registration form {
       display: grid;
       gap: 15px;
@@ -292,7 +303,7 @@
       font-size: 1rem;
       color: var(--light);
     }
-    /* Segmented Events by Slots */
+    /* Segmented Events by Slots - Timings Removed */
     /* Slot 1 */
     #slot1 { }
     /* Slot 2 */
@@ -479,6 +490,8 @@
       <a href="registration.html">Registration</a>
       <a href="schedule.html">Schedule</a>
       <a href="contact.html">Contact</a>
+	  <a href="asset/FLYER_Z25.webp">Z25 Flyer</a>
+	  <a href="Sponsership.html">Sponsership</a>
     </nav>
   </header>
   
@@ -486,6 +499,13 @@
   <div class="container">
     <section class="registration">
       <h2>Registration</h2>
+      <!-- New Informational Message -->
+      <div class="registration-info">
+        <p>To ensure smooth participation, we have categorized the events into three slots throughout the day. Each participant can choose one event per slot to avoid scheduling conflicts.</p>
+        <p>To ensure a smooth and fun experience, we have divided the events into three slots. You can choose one event from each slot to avoid timing conflicts.</p>
+        <p>✨ If you wish to participate in two events from the same slot, please reach out to the event coordinators to check for possible adjustments. However, we highly recommend picking just one event per slot for a hassle-free experience!</p>
+        <p>For a detailed description of each event, including rules and judging criteria, please visit our Instagram page (@ziggurat_25) or check out our official website. Stay tuned for updates and get ready for an exciting day at Ziggurat '25! 🎉😊</p>
+      </div>
       <form id="registrationForm" novalidate>
         <div>
           <label for="name">Name</label>
@@ -528,7 +548,7 @@
         
         <!-- Segmented Events -->
         <fieldset id="slot1">
-          <legend>Slot 1 (9:45 am to 10:45 am)</legend>
+          <legend>Slot 1</legend>
           <div class="event-option">
             <input type="checkbox" id="event1" name="events" value="1. Paper and Poster Presentation (Ceremony Hall)">
             <label for="event1">1. Paper and Poster Presentation (Ceremony Hall)</label>
@@ -548,7 +568,7 @@
         </fieldset>
         
         <fieldset id="slot2">
-          <legend>Slot 2 (11:00 am to 12:00 pm)</legend>
+          <legend>Slot 2</legend>
           <div class="event-option">
             <input type="checkbox" id="event5" name="events" value="5. CiviQuest (Classroom 2)">
             <label for="event5">5. CiviQuest (Classroom 2)</label>
@@ -568,7 +588,7 @@
         </fieldset>
         
         <fieldset id="slot3">
-          <legend>Slot 3 (12:15 pm to 1:15 pm)</legend>
+          <legend>Slot 3</legend>
           <div class="event-option">
             <input type="checkbox" id="event9" name="events" value="9. Scan and Plan (Classroom with Projector)">
             <label for="event9">9. Scan and Plan (Classroom with Projector)</label>
@@ -588,7 +608,7 @@
         </fieldset>
         
         <fieldset id="commonEvent">
-          <legend>Common Event (10:00 am to 1:00 pm)</legend>
+          <legend>Common Event</legend>
           <div class="event-option">
             <input type="checkbox" id="event13" name="events" value="13. Cube Clash (Research Lab)">
             <label for="event13">13. Cube Clash (Research Lab)</label>
@@ -608,12 +628,12 @@
           <legend>Workshop</legend>
           <div class="event-option">
             <input type="checkbox" id="workshop" name="events" value="Workshop">
-            <label for="workshop">Workshop</label>
+            <label for="workshop">Workshop On Digital Surveying</label>
           </div>
         </fieldset>
         <p id="counterNote" style="font-size: 1rem; color: var(--light); text-align: center; margin-top: 15px;">
           Registration Fee: Rs. <span id="flipCounter" class="flip-counter">100</span>
-          (Additional Rs.50 for Workshop, Total Rs.150 if selected). Payment will be collected at the event venue.
+          (Additional Rs.50 for Workshop, Total Rs.150 if opted for workshop). Payment will be collected at the event venue.
         </p>
 
         <button type="submit">Register Now</button>
@@ -813,6 +833,35 @@
         const timeoutPromise = new Promise(resolve => setTimeout(resolve, 2000));
         return Promise.race([fetchPromise, timeoutPromise]);
       }
+    });
+  </script>
+  
+  <!-- New Script: Restrict selection to 2 events per slot -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const slotIds = ['slot1', 'slot2', 'slot3', 'commonEvent'];
+      slotIds.forEach(function(slotId) {
+        const fieldset = document.getElementById(slotId);
+        if (fieldset) {
+          const checkboxes = fieldset.querySelectorAll('input[type="checkbox"]');
+          checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+              const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+              if (checkedCount >= 2) {
+                checkboxes.forEach(function(cb) {
+                  if (!cb.checked) {
+                    cb.disabled = true;
+                  }
+                });
+              } else {
+                checkboxes.forEach(function(cb) {
+                  cb.disabled = false;
+                });
+              }
+            });
+          });
+        }
+      });
     });
   </script>
 </body>

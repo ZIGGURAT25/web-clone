@@ -112,15 +112,22 @@
       overflow: hidden;
       transition: all 0.3s ease;
     }
+    /* 
+      Optimized header hover effect:
+      Instead of transitioning the width (which causes layout recalculations), we use a scaleX transform.
+    */
     nav.nav a::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 0%;
+      width: 100%;
       height: 100%;
       background: linear-gradient(90deg, var(--primary), var(--accent));
-      transition: width 0.4s ease;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+      will-change: transform;
       border-radius: 30px;
       z-index: -1;
     }
@@ -128,7 +135,7 @@
       color: var(--dark);
     }
     nav.nav a:hover::before {
-      width: 100%;
+      transform: scaleX(1);
     }
     @media (hover: none) {
       nav.nav a:hover {
@@ -136,7 +143,7 @@
         color: var(--light);
       }
       nav.nav a:hover::before {
-        width: 0%;
+        transform: scaleX(0);
       }
     }
     @media (max-width: 768px) {
@@ -684,6 +691,9 @@
       <a href="registration.html">Registration</a>
       <a href="schedule.html">Schedule</a>
       <a href="contact.html">Contact</a>
+	  <a href="asset/FLYER_Z25.webp">Z25 Flyer</a>
+      <a href="Sponsership.html">Sponsership</a>
+	  
     </nav>
   </header>
 
@@ -745,12 +755,10 @@
       <!-- Footer -->
       <div class="footer">
         <div class="social-links">
-          <a href="#" class="social-link">f</a>
-          <a href="#" class="social-link">in</a>
-          <a href="#" class="social-link">ig</a>
+          <a href="https://www.instagram.com/ziggurat_25_/" class="social-link">ig</a>
         </div>
         <p>© 2025 Department of Civil Engineering, Rajalakshmi Engineering College. All rights reserved.</p>
-        <p>For inquiries: ziggurat25@rajalakshmi.edu.in | +91 98765 43210</p>
+        <p>For inquiries: ziggurat25@gmail.com</p>
       </div>
     </div>
   </div>
@@ -768,55 +776,163 @@
       document.getElementById('navMenu').classList.toggle('active');
     }
     
-    // Dynamic Events Data – Easily add or edit events here.
+    // Dynamic Events Data – Updated with new details
     const eventsData = [
       {
         title: "Paper and Poster Presentation",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: PAPER AND POSTER PRESENTATION</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>VIGNESH.M</td><td>9345663712</td></tr>
+                 <tr><td>MERVIN ROJERS.R</td><td>7200573340</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>Depends on number of teams registered. (Last year it takes around one and half an hour for completion).</li>
+                 <li>At most 4 peoples will be joined and present their work as team. Individual also be allowed.</li>
+                 <li>The abstract of the papers are submitted by the registered candidate or teams on the specified date. Paper and poster are submitted via mail and google form from the team on or before the symposium. In the date of syposium, presentation will be carry out by the participants and judgement will be done by judges prizes will be give on symposium prize distribution.</li>
+                 <li>One projector, Chairs and tables are must for this event. (depend on the registration count, File along with notebook and stationaries are provided to the participants)</li>
+                 <li>Judgement will be announced by allotted judges.</li>
+                 <li>One projector, Chairs and tables are mandatory for this event.</li>
+               </ol>`
       },
       {
         title: "Master CAD",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: MASTER CAD</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Jayasuriya D</td><td>89256 70273</td></tr>
+                 <tr><td>Dharshan P</td><td>9150856366</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>All participants should attend 2 rounds.</li>
+                 <li>Individual participation.</li>
+                 <li>Duration of event will be one hour.</li>
+                 <li>Round 1: Participants need to attend MCQ of 20 questions.</li>
+                 <li>It may be in physical or google forms (Malpractice should be strictly prohibited.)</li>
+                 <li>Round 2: Participants need to draft a plan based on the given topic.</li>
+                 <li>Evaluation will be done based on the completion time and performance of drafting.</li>
+               </ol>`
       },
       {
         title: "Reflex and Debate",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: REFLEX AND DEBATE</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>SIVABALAN S</td><td>9710306114</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>Single person Participating event.</li>
+                 <li>Topics will be provided for each team by the judge.</li>
+                 <li>Two rounds will be conducted.</li>
+                 <li>Moderator says ‘block’ and speaker tells positively while ‘tackle’ speakers tell negatively.</li>
+                 <li>First round for single person: 2 minutes will be provided.</li>
+                 <li>Judge will select 1st round participants for 2nd round and second round: 1.5 minutes will be provided.</li>
+                 <li>Final decision will be taken by the judge and winner will be awarded.</li>
+                 <li>A dynamic debate event testing quick thinking, adaptability, and communication by switching between “Tackle” and “Block” perspectives.</li>
+                 <li>Round 1: Quick Thinking – Participants have 3 minutes to present their stance, showcasing adaptability, logic, and clarity.</li>
+                 <li>Round 2: Strategy and Depth – Qualified participants get 5 minutes to explore their topic, testing fluency, creativity, and endurance.</li>
+               </ol>`
       },
       {
         title: "Link 'N' Build",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: LINK 'N' BUILD</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>DURGASHREE C</td><td>9677395890</td></tr>
+                 <tr><td>DESINA MARY L</td><td>8056845050</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>Time duration: 1 hr.</li>
+                 <li>Teams must have 3 to 4 members.</li>
+                 <li>A civil engineering-related word or phrase is broken into multiple words (in Tamil or English) and represented through images. Participants must combine the clues to form the correct term within 1 minute.</li>
+                 <li>The game consists of two rounds, with increasing difficulty. Top teams from Round 1 advance to Round 2.</li>
+                 <li>The fastest team to answer correctly earns points. The team with the highest score at the end wins.</li>
+                 <li>No mobile phones or external assistance allowed.</li>
+               </ol>`
       },
       {
         title: "CiviQuest",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: CIVIQUEST</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Priyadharshini</td><td>9444140975</td></tr>
+                 <tr><td>Deepa</td><td>8940329933</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>The duration of our event will be one hour, split into two rounds: Round One (Written Test) – 30 minutes and Final Round (Rapid-Fire) – 30 minutes.</li>
+                 <li>Participation: It can be maximum two persons or a minimum of one person.</li>
+                 <li>Overview of the event: 1st round will be a written test consisting of 50 civil-related questions (30 minutes), and 2nd round, which is a rapid-fire round, will involve the top 10 participants and consist of 30 questions.</li>
+                 <li>For both rounds, questions along with rough sheets will be provided to the participants.</li>
+               </ol>`
       },
       {
         title: "Civilathon",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: CIVILATHON</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>K Dhanya</td><td>90032 89056</td></tr>
+               </table>`
       },
       {
         title: "Bridge to Blockbuster",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: BRIDGE TO BLOCKBUSTER</h3>
+               <p><strong>No On Spot Registration</strong></p>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Srikeerthanaa P J</td><td>7358406182</td></tr>
+                 <tr><td>Mukilan</td><td>8148386513</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <p><strong>Max Registrations: 10 to 15 Teams</strong></p>
+               <ol>
+                 <li>Duration of the event: 1 hour.</li>
+                 <li>Teams must consist of 2-3 members.</li>
+                 <li>Round 1 - Film Discussion: Teams have 20-30 seconds to discuss a randomly chosen film or character topic. Correct, on-topic answers earn marks; distractions or off-topic discussions lead to elimination.</li>
+                 <li>Round 2 - Cine Link: Teams are given clues to order multiple films correctly within 1-2 minutes. A "Life Saver" option allows rearranging answers if 2 or 3 are correct, with full marks for correct answers and half marks for partially correct ones.</li>
+                 <li>After registration, you'll be added to a group for event notifications.</li>
+                 <li>Registered students must send their team name in PDF format in the WhatsApp group.</li>
+               </ol>`
       },
       {
         title: "Master Builder",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: MASTER BUILDER</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>JAGHATHARANI S</td><td>8610144454</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>Objective: Participants must construct a structure (such as a bridge or a building) using the provided materials within the given time limit.</li>
+                 <li>Participation: Teams of up to 2 members.</li>
+                 <li>Time Limit: 60 minutes total.</li>
+                 <li>Materials: All required materials will be supplied by the organizing team. External materials are not allowed.</li>
+                 <li>Challenge Constraint: For the first 20 minutes, participants’ hands will be tied together, making construction more challenging. After that, they will have 40 minutes to complete their structure.</li>
+                 <li>Judging Criteria: The winner will be determined based on a final load test on the constructed structure.</li>
+                 <li>Participants must adhere to the time limits strictly.</li>
+                 <li>Any attempt to tamper with materials or violate the rules may lead to disqualification.</li>
+                 <li>Judges' decisions are final and binding.</li>
+               </ol>`
       },
       {
         title: "Scan and Plan",
@@ -826,75 +942,134 @@
                <table border='1' cellspacing='0' cellpadding='5'>
                  <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
                  <tr><td>Vennila KT</td><td>8778734794</td></tr>
-                 <tr><td>Vinodhini V</td><td>9626 02731</td></tr>
+                 <tr><td>Vinodhini V</td><td>99626 02731</td></tr>
                </table>
                <h4>RULES AND REGULATIONS</h4>
-               <ul>
+               <ol>
                  <li>The event duration is 1 hour.</li>
-                 <li>Round 1 (Individual Task - Writing Analysis):
-                     <ul>
-                       <li>A general video will be played.</li>
-                       <li>Participants will have 5-10 minutes to write their analysis on paper.</li>
-                       <li>Based on their responses, participants will be filtered, and selected ones will form teams for the next round.</li>
-                     </ul>
-                 </li>
-                 <li>Round 2 (Team Task - Rapid Fire Round):
-                     <ul>
-                       <li>Shortlisted participants will be grouped into teams of 3 members.</li>
-                       <li>A civil engineering-related video will be played.</li>
-                       <li>Teams will then face a rapid-fire quiz based on the video and general civil engineering topics.</li>
-                       <li>Stationery (Paper &amp; Pens) will be provided.</li>
-                     </ul>
-                 </li>
+                 <li>Round 1 (Individual Task - Writing Analysis): A general video will be played; participants will have 5-10 minutes to write their analysis; based on responses, selected ones will form teams for the next round.</li>
+                 <li>Round 2 (Team Task - Rapid Fire Round): Shortlisted participants will be grouped into teams of 3; a civil engineering-related video will be played; teams face a rapid-fire quiz; stationery (paper & pens) will be provided.</li>
                  <li>Judging Criteria: The team with the highest total points in the rapid-fire round will be declared the winner.</li>
-               </ul>`
+               </ol>`
+      },
+      {
+        title: "Code Crack",
+        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
+        info: `<h3>EVENT NAME: CODE CRACK</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>HEMALATHA S</td><td>9789144653</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>Time Limited: 20 minutes.</li>
+                 <li>Maximum team size: 2 members.</li>
+                 <li>Participants are not allowed to bring any unauthorized reference materials or notes into the test arena.</li>
+                 <li>Points will be graded based on the accuracy of the response (partial credit may be given for partially correct answers, at the discretion of the examiners).</li>
+                 <li>Code book will be provided for the test reference.</li>
+               </ol>`
       },
       {
         title: "Cube Clash",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
         info: `<h3>EVENT NAME: CUBE CLASH</h3>
                <h4>CO-ORDINATORS</h4>
-               <p>Dharshan P - 9150856366</p>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Dharshan P</td><td>9150856366</td></tr>
+               </table>
                <h4>RULES AND REGULATIONS</h4>
                <ol>
-                 <li>The team should cast a cube for M40 grade Concrete</li>
-                 <li>Compression strength will be tested for 14th day</li>
-                 <li>No admixture should be used</li>
+                 <li>The team should cast a 150 x 150 x 150 mm cube for M40 grade Concrete.</li>
+                 <li>Compression strength will be tested for the 7th day.</li>
+                 <li>No admixture should be used.</li>
                  <li>Team should submit softcopy of the design one day before the event and the design should follow the standards.</li>
-                 <li>Add casting video</li>
+                 <li>Add casting video.</li>
                  <li>The team should submit three cubes covered with aluminium foil.</li>
-                 <li>Maximum No. of members in a team is 3</li>
+                 <li>Maximum number of members in a team is 3.</li>
                </ol>`
-      },
-      {
-        title: "Code Crack",
-        image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
       },
       {
         title: "Concrete Hands",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: CONCRETE HANDS</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Dhakshinamoorthi</td><td>8220029722</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>No nails are allowed.</li>
+                 <li>Right handed members only allowed.</li>
+                 <li>Instructions will be announced in the venue.</li>
+                 <li>Judge Decision is final.</li>
+                 <li>Note: Remember, it is important for all participants to confirm their participation at the registration desk before the event.</li>
+               </ol>`
       },
       {
         title: "Pillars and Pixel",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: PILLARS AND PIXEL</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Jeshwanth B</td><td>9791872206</td></tr>
+                 <tr><td>Kaliraj T</td><td>84385 86696</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>The event will be conducted for one hour.</li>
+                 <li>This is an individual participation event. Participants from all departments/colleges can attend.</li>
+                 <li>Participants must bring their own camera (either a phone camera or a DSLR).</li>
+                 <li>The theme for the photography will be announced at the venue.</li>
+                 <li>Photos will be evaluated based on creativity, composition, and relevance to the theme.</li>
+                 <li>Entries should be submitted in JPEG/PNG format.</li>
+               </ol>`
       },
       {
         title: "Load and Locate",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: LOAD AND LOCATE</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>AKSHAYA PRIYA.B</td><td>8608213380</td></tr>
+                 <tr><td>NITHISH KUMAR. M</td><td>9360811879</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>Each team has 15 minutes to complete the challenge.</li>
+                 <li>Team Event (Minimum 3 members, Maximum 4 members).</li>
+                 <li>Load and Locate is an exciting and challenging event inspired by a treasure hunt with a unique twist. Participants will navigate through a series of clues and tasks to locate a hidden treasure.</li>
+                 <li>The team that finds the treasure in the shortest time will be announced as the winner.</li>
+                 <li>Teams must follow the clue sequence.</li>
+                 <li>No interference with other teams.</li>
+                 <li>A 'Load and Locate' team member will accompany to guide participants.</li>
+                 <li>Participants must follow safety guidelines set by the organizers.</li>
+                 <li>No damage should be done to private property, plants, or cultural landmarks.</li>
+               </ol>`
       },
       {
         title: "Structocon",
         image: "https://betterstudio.com/wp-content/uploads/2019/05/1-1-instagram-1024x1024.jpg",
-        info: `<p><strong>Faculty Coordinator:</strong> TBD</p>
-               <p><strong>Student Coordinator:</strong> TBD</p>`
+        info: `<h3>EVENT NAME: STRUCTOCON</h3>
+               <h4>CO-ORDINATORS</h4>
+               <table border='1' cellspacing='0' cellpadding='5'>
+                 <tr><th>NAME</th><th>CONTACT NUMBER</th></tr>
+                 <tr><td>Vignesh</td><td>9345663712</td></tr>
+                 <tr><td>Ferin J Tifo</td><td>7397148801</td></tr>
+               </table>
+               <h4>RULES AND REGULATIONS</h4>
+               <ol>
+                 <li>The event will be conducted after the inauguration ceremony.</li>
+                 <li>Both.</li>
+                 <li>Dates will be announced before the symposium; models will be collected, then on 22/03 models will be exhibited and judgement will be done by judges, with prizes given on symposium prize distribution.</li>
+                 <li>We need tables and clothes for the exhibition of models (number of tables will be announced after models are collected and finalized).</li>
+                 <li>Judgement will be announced by allotted judges.</li>
+                 <li>Tables and clothes are important for exhibition of models; last year we faced a shortage of tables and clothes.</li>
+               </ol>`
       }
     ];
     
@@ -969,7 +1144,7 @@
           p.style.position = 'absolute';
           p.style.left = `${Math.random() * 100}%`;
           p.style.top = `${Math.random() * 100}%`;
-          const size = Math.random() * 3 + 1; // 1px to 4px
+          const size = Math.random() * 3 + 1;
           p.style.width = `${size}px`;
           p.style.height = `${size}px`;
           p.style.background = 'lime';
