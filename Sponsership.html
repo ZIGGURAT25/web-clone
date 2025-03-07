@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sponsorship Brochure - Mobile Responsive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables */
+    :root {
+      --primary: #6C63FF;
+      --secondary: #FF6B6B;
+      --accent: #00F5A0;
+      --dark: #121212;
+      --light: #FFFFFF;
+      --medium: rgba(255,255,255,0.05);
+      --platinum: #E5E4E2;
+      --gold: #FFD700;
+      --silver: #C0C0C0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+    /* Main container */
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 20px auto;
+      position: relative;
+      padding: 20px;
+      background: radial-gradient(circle at top right, #1A1A2E, #121212);
+      overflow: hidden;
+    }
+    /* Particles Container */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      background-color: var(--accent);
+      width: 2px;
+      height: 2px;
+      opacity: 0.6;
+      animation: particle-rise 15s infinite linear;
+    }
+    @keyframes particle-rise {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-50px); opacity: 0; }
+    }
+    /* Noise overlay */
+    .noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Animated Triangles */
+    .triangle {
+      position: absolute;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      opacity: 0.3;
+      z-index: 0;
+      animation: float-triangle 25s infinite alternate;
+    }
+    .triangle.triangle-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: 15%;
+      left: -150px;
+      animation-duration: 30s;
+    }
+    .triangle.triangle-2 {
+      width: 250px;
+      height: 250px;
+      background: var(--secondary);
+      bottom: 10%;
+      right: -120px;
+      animation-duration: 35s;
+    }
+    .triangle.triangle-3 {
+      width: 200px;
+      height: 200px;
+      background: var(--accent);
+      top: 50%;
+      right: -100px;
+      animation-duration: 28s;
+    }
+    @keyframes float-triangle {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(20px, -20px) rotate(15deg); }
+      100% { transform: translate(-20px, 20px) rotate(-15deg); }
+    }
+    /* Animated Squares */
+    .square {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: var(--secondary);
+      opacity: 0.3;
+      z-index: 0;
+      animation: float-square 20s infinite alternate;
+    }
+    .square.square-1 {
+      top: 20%;
+      right: -80px;
+      animation-duration: 22s;
+    }
+    .square.square-2 {
+      bottom: 15%;
+      left: -80px;
+      animation-duration: 26s;
+    }
+    @keyframes float-square {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(20px, -20px) rotate(45deg); }
+      100% { transform: translate(-20px, 20px) rotate(-45deg); }
+    }
+    /* Content Wrapper */
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+    /* ----------------------
+       Page 1 Styles
+       ---------------------- */
+    .page1 .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    .page1 .logo,
+    .page1 .ici-logo {
+      width: 80px;
+      height: 80px;
+      background-color: #fff;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .page1 .logo { border-radius: 20px; }
+    .page1 .ici-logo { border-radius: 5px; }
+    .page1 .college-info {
+      flex: 1;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .page1 .college-info h1 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--light), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 3px;
+      line-height: 1.1;
+    }
+    .page1 .college-info h2 { font-size: 0.8rem; color: rgba(255,255,255,0.8); font-weight: 400; margin-bottom: 3px; }
+    .page1 .college-info h3 { font-size: 0.7rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+    .page1 .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 10px 0;
+    }
+    .page1 .department {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .page1 .department::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: var(--accent);
+      left: 50%;
+      transform: translateX(-50%);
+      top: -5px;
+    }
+    .page1 .department h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .page1 .department h3:last-child { color: var(--accent); }
+    .page1 .event-showcase {
+      text-align: center;
+      position: relative;
+      padding: 30px 0;
+      margin-bottom: 30px;
+    }
+    .page1 .event-title {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, var(--primary), rgba(255,107,107,0.7), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      line-height: 1;
+      position: relative;
+      z-index: 3;
+    }
+    .page1 .event-subtitle {
+      font-size: 1rem;
+      color: white;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 3;
+    }
+    .page1 .date-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(135deg, rgba(255,107,107,0.7), var(--primary));
+      color: white;
+      padding: 8px 15px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      z-index: 3;
+      box-shadow: 0 5px 15px rgba(108,99,255,0.3);
+    }
+    .page1 .sections-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .page1 .section {
+      position: relative;
+      z-index: 3;
+    }
+    .page1 .section-title {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--light);
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .page1 .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: var(--accent);
+    }
+    .page1 .section-content {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      padding-left: 10px;
+      position: relative;
+      text-align: justify;
+    }
+    .page1 .section-content::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), transparent);
+    }
+    .page1 .section-content p { margin-bottom: 10px; }
+    .page1 .sponsorship { grid-column: 1 / -1; margin-top: 10px; }
+    .page1 .benefits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .page1 .benefit {
+      background: rgba(255,255,255,0.05);
+      border-radius: 100px;
+      padding: 8px 20px 8px 10px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .page1 .benefit::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .page1 .customization { grid-column: 1 / -1; margin-top: 10px; }
+    /* ----------------------
+       Page 2 Styles (Sponsor Packages & Contact)
+       ---------------------- */
+    .page2 { margin-top: 40px; }
+    .page2 header { margin-bottom: 15px; text-align: center; }
+    .page2 .header-title {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, var(--light), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin-bottom: 5px;
+    }
+    .page2 .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 12px 0;
+    }
+    .page2 .benefits-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      flex-grow: 1;
+      /* Wrap table for horizontal scroll on mobile */
+      overflow-x: auto;
+    }
+    .page2 .benefits-table {
+      width: 100%;
+      margin: 0 auto;
+      border-collapse: separate;
+      border-spacing: 0;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+    .page2 .benefits-table th,
+    .page2 .benefits-table td {
+      padding: 10px 8px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .page2 .benefits-table th {
+      background-color: rgba(108,99,255,0.2);
+      color: var(--light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .page2 .benefits-header {
+      background-color: var(--medium) !important;
+      color: var(--light) !important;
+      font-weight: 700 !important;
+      text-align: left;
+      font-size: 13px !important;
+    }
+    .page2 .platinum-col { background-color: rgba(229,228,226,0.05); }
+    .page2 .gold-col { background-color: rgba(255,215,0,0.05); }
+    .page2 .silver-col { background-color: rgba(192,192,192,0.05); }
+    .page2 .package-title {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 2px;
+      padding: 3px 10px;
+      border-radius: 16px;
+    }
+    .page2 .platinum .package-title {
+      background: linear-gradient(135deg, var(--platinum), #ffffff);
+      color: var(--dark);
+    }
+    .page2 .gold .package-title {
+      background: linear-gradient(135deg, var(--gold), #ffeeb3);
+      color: var(--dark);
+    }
+    .page2 .silver .package-title {
+      background: linear-gradient(135deg, var(--silver), #e0e0e0);
+      color: var(--dark);
+    }
+    .page2 .package-price {
+      font-weight: 600;
+      font-size: 12px;
+      color: rgba(255,255,255,0.9);
+      margin-top: 3px;
+    }
+    .page2 .check-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background-color: var(--accent);
+      color: var(--dark);
+      border-radius: 50%;
+      font-size: 11px;
+      box-shadow: 0 2px 8px rgba(0,245,160,0.3);
+    }
+    .page2 .cross-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background-color: var(--secondary);
+      color: white;
+      border-radius: 50%;
+      font-size: 11px;
+      box-shadow: 0 2px 8px rgba(255,107,107,0.3);
+    }
+    .page2 .benefits-table tr:hover {
+      background-color: rgba(255,255,255,0.03);
+    }
+    .page2 .benefits-table tr:last-child td {
+      border-bottom: none;
+    }
+    .page2 .contact-section {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+      background-color: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .page2 .contact-section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    /* ----------------------
+       Responsive Adjustments
+       ---------------------- */
+    @media (max-width: 768px) {
+      .page1 .header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .page1 .sections-container {
+        grid-template-columns: 1fr;
+      }
+      .page1 .event-title {
+        font-size: 3.5rem;
+      }
+      .page1 .event-subtitle {
+        font-size: 1.2rem;
+      }
+      .page2 .header-title {
+        font-size: 1.8rem;
+      }
+      .page2 .benefits-table th, .page2 .benefits-table td {
+        font-size: 11px;
+        padding: 8px 6px;
+      }
+      .page2 .package-title {
+        font-size: 13px;
+      }
+      /* Ensure table container scrolls if needed */
+      .page2 .benefits-section {
+        overflow-x: auto;
+      }
+      .page2 .benefits-table {
+        min-width: 600px;
+      }
+    }
+    @media (max-width: 480px) {
+      .page1 .college-info h1 {
+        font-size: 1.3rem;
+      }
+      .page1 .event-title {
+        font-size: 3rem;
+      }
+      .page1 .date-tag {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+      }
+      .page1 .event-subtitle {
+        font-size: 1rem;
+      }
+      .page2 .header-title {
+        font-size: 1.6rem;
+      }
+      .page2 .section-title {
+        font-size: 1rem;
+      }
+      .page2 .package-title {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Global Particles -->
+    <div class="particles-container"></div>
+    <!-- Animated Background: Triangles, Squares & Noise -->
+    <div class="triangle triangle-1"></div>
+    <div class="triangle triangle-2"></div>
+    <div class="triangle triangle-3"></div>
+    <div class="square square-1"></div>
+    <div class="square square-2"></div>
+    <div class="noise"></div>
+    
+    <div class="content">
+      <!-- Page 1 Content -->
+      <div class="page1">
+        <div class="header">
+          <div class="logo">
+            <img src="asset/college_logo.png" alt="College Logo" width="70">
+          </div>
+          <div class="college-info">
+            <h1>RAJALAKSHMI ENGINEERING COLLEGE</h1>
+            <h2>(AN AUTONOMOUS INSTITUTION)</h2>
+            <h3>THANDALAM, CHENNAI 602105</h3>
+          </div>
+          <div class="ici-logo">
+            <img src="asset/ici_logo.png" alt="ICI Logo" width="70">
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="department">
+          <h3>DEPARTMENT OF CIVIL ENGINEERING</h3>
+          <h3>PROUDLY PRESENTS</h3>
+        </div>
+        <div class="event-showcase">
+          <div class="date-tag">JOIN US ON MARCH 22, 2025</div>
+          <div class="event-title">ZIGGURAT'25</div>
+          <div class="event-subtitle">A NATIONAL LEVEL TECHNICAL SYMPOSIUM</div>
+        </div>
+        <div class="sections-container">
+          <div class="section">
+            <h4 class="section-title">INTRODUCTION</h4>
+            <div class="section-content">
+              <p>Ziggurat '25 is an annual gathering of professionals, academicians, and students in the field of civil engineering, aimed at fostering collaboration, knowledge exchange, and innovation.</p>
+              <p>We are excited to invite your esteemed organization to partner with us for the upcoming Ziggurat '25 scheduled to take place on March 22 at Rajalakshmi Engineering College.</p>
+            </div>
+          </div>
+          <div class="section">
+            <h4 class="section-title">SYMPOSIUM OVERVIEW</h4>
+            <div class="section-content">
+              <p>Ziggurat '25 will explore many topics, featuring engaging keynote presentations, technical sessions, poster presentations, and hands-on workshops.</p>
+              <p>Attendees will have the opportunity to interact with renowned experts, learn about the latest advancements, and connect with peers from various colleges.</p>
+            </div>
+          </div>
+          <div class="section sponsorship">
+            <h4 class="section-title">SPONSORSHIP OPPORTUNITY</h4>
+            <div class="section-content">
+              <p>We offer customizable sponsorship packages tailored to meet your organization's marketing objectives and budgetary preferences. Choose from our Platinum, Gold, Silver, or Bronze sponsorship tiers, each offering a unique set of benefits and promotional opportunities to showcase your brand and demonstrate your commitment to the civil engineering community.</p>
+              <p>Sponsoring presents a unique opportunity to:</p>
+              <div class="benefits">
+                <div class="benefit">Reach a targeted audience</div>
+                <div class="benefit">Build brand awareness</div>
+                <div class="benefit">Engage with key stakeholders</div>
+              </div>
+              <p>If you are a good speaker, we would love to learn from your journey and experiences.</p>
+            </div>
+          </div>
+          <div class="section customization">
+            <h4 class="section-title">CUSTOMIZATION OPTION</h4>
+            <div class="section-content">
+              <p>In addition to our standard sponsorship packages, we welcome the opportunity to collaborate with you to create bespoke sponsorship opportunities that align with your organization's goals and priorities.</p>
+              <p>Whether you are interested in hosting a sponsored session, organizing a networking event, or exploring other creative marketing initiatives, we are committed to ensuring that your sponsorship experience exceeds expectations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Page 2 Content -->
+      <div class="page2">
+        <header>
+          <h1 class="header-title">SPONSORSHIP PACKAGES</h1>
+        </header>
+        <div class="divider"></div>
+        <div class="benefits-section">
+          <h3 class="section-title">Sponsorship Benefits</h3>
+          <table class="benefits-table">
+            <thead>
+              <tr>
+                <th class="benefits-header">Benefits</th>
+                <th class="platinum">
+                  <div class="package-title">Platinum</div>
+                  <div class="package-price">Rs.10,000+</div>
+                </th>
+                <th class="gold">
+                  <div class="package-title">Gold</div>
+                  <div class="package-price">Rs.5,000</div>
+                </th>
+                <th class="silver">
+                  <div class="package-title">Silver</div>
+                  <div class="package-price">&lt; Rs.5,000</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="benefits-header">Special acknowledgement of support at events</td>
+                <td class="platinum-col"><span class="check-icon">✓</span></td>
+                <td class="gold-col"><span class="check-icon">✓</span></td>
+                <td class="silver-col"><span class="check-icon">✓</span></td>
+              </tr>
+              <tr>
+                <td class="benefits-header">Logo on Maps &amp; sign boards</td>
+                <td class="platinum-col"><span class="check-icon">✓</span></td>
+                <td class="gold-col"><span class="cross-icon">×</span></td>
+                <td class="silver-col"><span class="cross-icon">×</span></td>
+              </tr>
+              <tr>
+                <td class="benefits-header">Logos printed in all the certificates</td>
+                <td class="platinum-col"><span class="check-icon">✓</span></td>
+                <td class="gold-col"><span class="cross-icon">×</span></td>
+                <td class="silver-col"><span class="cross-icon">×</span></td>
+              </tr>
+              <tr>
+                <td class="benefits-header">Social media post announcement</td>
+                <td class="platinum-col"><span class="check-icon">✓</span></td>
+                <td class="gold-col"><span class="check-icon">✓</span></td>
+                <td class="silver-col"><span class="cross-icon">×</span></td>
+              </tr>
+              <tr>
+                <td class="benefits-header">Distribution of marketing props to participants</td>
+                <td class="platinum-col"><span class="check-icon">✓</span></td>
+                <td class="gold-col"><span class="cross-icon">×</span></td>
+                <td class="silver-col"><span class="cross-icon">×</span></td>
+              </tr>
+              <tr>
+                <td class="benefits-header">Drop banners</td>
+                <td class="platinum-col"><span class="check-icon">✓</span></td>
+                <td class="gold-col"><span class="check-icon">✓</span></td>
+                <td class="silver-col"><span class="cross-icon">×</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="contact-section">
+          <h3 class="contact-section-title">Contact</h3>
+          <div class="contact-info">
+            <p class="contact-detail contact-person">KAVIRAJAPANDI</p>
+            <p class="contact-detail contact-phone">63810-72202</p>
+            <p class="contact-detail contact-person">CHARAN REDDY</p>
+            <p class="contact-detail contact-phone">99405-53689</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- Ge
