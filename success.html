@@ -184,6 +184,24 @@
       font-size: 1.1rem;
       line-height: 1.6;
     }
+
+    /* WhatsApp Section Styles */
+    .whatsapp-container {
+      margin-top: 20px;
+    }
+    .whatsapp-button {
+      display: inline-block;
+      background: #28a745;
+      color: var(--light);
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .whatsapp-button:hover {
+      background: #218838;
+    }
   </style>
 </head>
 <body>
@@ -204,8 +222,8 @@
       <a href="registration.html">Registration</a>
       <a href="schedule.html">Schedule</a>
       <a href="contact.html">Contact</a>
-	  <a href="asset/FLYER_Z25.webp">Z25 Flyer</a>
-	  <a href="Sponsership.html">Sponsership</a>
+      <a href="asset/FLYER_Z25.webp">Z25 Flyer</a>
+      <a href="Sponsership.html">Sponsership</a>
     </nav>
   </header>
   
@@ -213,14 +231,16 @@
   <div class="container">
     <h2>Registration Successful!</h2>
     <p id="successMessage">
-      Registration successful! Total Amount: Rs. <span id="displayAmount">0</span>. <br>
-      Please check your email (including your spam folder) for a confirmation message. <br>
-      For further assistance, please contact us.
+      Thank you for registering for Ziggurat 25 – we’re excited to have you with us! Payment of Rs. <span id="displayAmount">0</span> will be collected at the event venue. Please check your email (including your spam folder) for a confirmation message. For any further assistance, feel free to contact us.
     </p>
+    <div class="whatsapp-container">
+      <p>To stay updated with the latest announcements and connect with other participants, please join our dedicated WhatsApp group using the link below:</p>
+      <a href="https://chat.whatsapp.com/KIpeegs10yH8CrcQD5OujL" target="_blank" class="whatsapp-button">Join WhatsApp Group</a>
+    </div>
   </div>
 
   <script>
-    // Retrieve the 'amount' parameter from the URL and display it
+    // Retrieve the 'amount' parameter from the URL and update the span
     const params = new URLSearchParams(window.location.search);
     const amount = params.get('amount') || '100';
     document.getElementById('displayAmount').textContent = amount;
